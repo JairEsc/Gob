@@ -1,4 +1,4 @@
-function openCity(evt, cityName) {
+function openChart(evt, tagName) {
     // Declare all variables
     var i, tabcontent, tablinks;
   
@@ -15,36 +15,64 @@ function openCity(evt, cityName) {
     }
   
     // Show the current tab, and add an "active" class to the button that opened the tab
-    document.getElementById(cityName).style.display = "block";
+    document.getElementById(tagName).style.display = "block";
     evt.currentTarget.className += " active";
+    window.dispatchEvent(new Event("resize"));
   }
+  function linearRegression(y,x){
+    var lr = {};
+    var n = y.length;
+    var sum_x = 0;
+    var sum_y = 0;
+    var sum_xy = 0;
+    var sum_xx = 0;
+    var sum_yy = 0;
+
+    for (var i = 0; i < y.length; i++) {
+
+        sum_x += x[i];
+        sum_y += y[i];
+        sum_xy += (x[i]*y[i]);
+        sum_xx += (x[i]*x[i]);
+        sum_yy += (y[i]*y[i]);
+    } 
+
+    lr['slope'] = (n * sum_xy - sum_x * sum_y) / (n*sum_xx - sum_x * sum_x);
+    lr['intercept'] = (sum_y - lr.slope * sum_x)/n;
+    lr['r2'] = Math.pow((n*sum_xy - sum_x*sum_y)/Math.sqrt((n*sum_xx-sum_x*sum_x)*(n*sum_yy-sum_y*sum_y)),2);
+
+    return lr;
+}
 document.getElementById("defaultOpen").click();
 
-  
+B.onChange = function(newValue) {
+    console.log("Ultimo estado seleccionado " + newValue);
+    chart_nac.data.datasets[0].backgroundColor.fill('rgba(75, 192, 192, 0.2)')
+    chart_nac.data.datasets[0].backgroundColor[13-1] = 'rgba(75, 192, 192, 1)'
+    chart_nac.data.datasets[0].backgroundColor[newValue-1]='rgba(75, 192, 192, 1)'
+    chart_nac.update();
+};
 document.addEventListener("DOMContentLoaded", function() {
     let chart;
     fetch('Datos/Nacional_prueba.csv')
     .then(response => response.text())
     .then(data=> {
         var lines = data.split('\n');
-        console.log(data.split('\n'))
                 nac=[]
                 lines.forEach((line, index) => {
                     if (index === 0) 
                         names=line.trim();
-                         // Skip the header
                     nac.push(line.split(','))  
                 });
-                console.log(nac[0].slice(3))
                 const ctx_nac = document.getElementById('nacional').getContext('2d');
                 chart_nac = new Chart(ctx_nac, {
                     type: 'bar',
                     data: {
                         labels: nac[0].slice(3).map(x=>JSON.parse(x)),
                         datasets: [{
-                            label: "Nacional",
+                            label: JSON.parse(nac[1]['0']),
                             data: nac[1].slice(3),
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            backgroundColor: nac[1].slice(3).fill('rgba(75, 192, 192, 0.2)'),
                             borderColor: 'rgba(75, 192, 192, 1)',
                             borderWidth: 1
                         }]
@@ -55,23 +83,9 @@ document.addEventListener("DOMContentLoaded", function() {
                                 beginAtZero: false,
                             }
                         },
-                        plugins: {
-                            zoom: {
-                                pan: {
-                                    enabled: true,
-                                    mode: 'xy',
-                                },
-                                zoom: {
-                                    enabled: true,
-                                    mode: 'xy',
-                                    
-                                }
-                                },
-            
-                        },
                     }
-                    
                 });
+                chart_nac.data.datasets[0].backgroundColor[13-1] = 'rgba(75, 192, 192, 1)'
     })
     
     fetch('Datos/hidalgo_base.csv')
@@ -120,6 +134,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
             const sortedYears = combined.map(item => item.year.toString()); // Convertir años de nuevo a string
             const sortedDatos = combined.map(item => item.value);
+            const x=combined.map(item => item.year).sort()
+            console.log("x"+x)
+            console.log("y"+sortedDatos)
+            lr=linearRegression(sortedDatos,x)
+            x_0=lr['intercept'];
+            p=lr['slope'];
+            console.log(x.map(function(y) { return x_0+y * p; }))
             if (chart) {
                 // Actualizar la gráfica existente
                 chart.data.labels = sortedYears;
@@ -140,7 +161,11 @@ document.addEventListener("DOMContentLoaded", function() {
                             backgroundColor: 'rgba(75, 192, 192, 0.2)',
                             borderColor: 'rgba(75, 192, 192, 1)',
                             borderWidth: 1
-                        }]
+                        },
+                        {
+                            label: 'Regresión',
+                            data: [x.map(function(y) { return x_0+y * p; })],
+                        },]
                     },
                     options: {
                         scales: {
@@ -148,22 +173,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                 beginAtZero: false,
                             }
                         },
-                        plugins: {
-                            zoom: {
-                                pan: {
-                                  enabled: true,
-                                  mode: 'xy',
-                                },
-                                zoom: {
-                                  enabled: true,
-                                  mode: 'xy',
-                                  
-                                }
-                              },
-
-                        },
                     }
-                    
                 });
             }
         })
