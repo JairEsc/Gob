@@ -19,7 +19,7 @@ function openChart(evt, tagName) {
     evt.currentTarget.className += " active";
     window.dispatchEvent(new Event("resize"));
   }
-  function linearRegression(y,x){
+function linearRegression(y,x){
     var lr = {};
     var n = y.length;
     var sum_x = 0;
@@ -46,7 +46,6 @@ function openChart(evt, tagName) {
 document.getElementById("defaultOpen").click();
 
 B.onChange = function(newValue) {
-    console.log("Ultimo estado seleccionado " + newValue);
     chart_nac.data.datasets[0].backgroundColor.fill('rgba(75, 192, 192, 0.2)')
     chart_nac.data.datasets[0].backgroundColor[13-1] = 'rgba(75, 192, 192, 1)'
     chart_nac.data.datasets[0].backgroundColor[newValue-1]='rgba(75, 192, 192, 1)'
@@ -127,26 +126,24 @@ document.addEventListener("DOMContentLoaded", function() {
                     datos.push(parseFloat(line.split(',')[3].trim()))
                 }
             });
-            const combined = years.map((year, index) => ({
+            var combined = years.map((year, index) => ({
                 year: parseInt(JSON.parse(year), 10), // Convertir año a número
                 value: datos[index]
             })).sort((a, b) => a.year - b.year);
 
-            const sortedYears = combined.map(item => item.year.toString()); // Convertir años de nuevo a string
-            const sortedDatos = combined.map(item => item.value);
-            const x=combined.map(item => item.year).sort()
-            console.log("x"+x)
-            console.log("y"+sortedDatos)
+            var sortedYears = combined.map(item => item.year.toString()); // Convertir años de nuevo a string
+            var sortedDatos = combined.map(item => item.value);
+            var x=combined.map(item => item.year).sort()
             lr=linearRegression(sortedDatos,x)
             x_0=lr['intercept'];
             p=lr['slope'];
-            console.log(x.map(function(y) { return x_0+y * p; }))
+            x.push(x[x.length-1]+1)//2023 va a ser funcion de x
             if (chart) {
                 // Actualizar la gráfica existente
                 chart.data.labels = sortedYears;
                 chart.data.datasets[0].data = sortedDatos;
-                chart.data.datasets[0].label=$(this).val(),
-                
+                chart.data.datasets[1].data = x.map(function(y) { return x_0+y * p; });
+                chart.data.datasets[0].label=$(this).val();
                 chart.update();
             } else {
                 // Crear una nueva gráfica
@@ -154,7 +151,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 chart = new Chart(ctx, {
                     type: 'line',
                     data: {
-                        labels: years.sort(),
+                        labels: x.sort(),
                         datasets: [{
                             label: $(this).val(),
                             data: sortedDatos,
@@ -164,7 +161,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         },
                         {
                             label: 'Regresión',
-                            data: [x.map(function(y) { return x_0+y * p; })],
+                            data: x.map(function(y) { return x_0+y * p; }),
                         },]
                     },
                     options: {
