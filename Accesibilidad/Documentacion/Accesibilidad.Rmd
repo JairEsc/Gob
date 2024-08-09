@@ -31,7 +31,7 @@ knitr::include_graphics("friccion.PNG" )
 
 ## Rasters a utilizar
 
-A continuación mostramos los archivos .tif utilizados:
+A continuación mostramos los archivos .tif utilizados, los cuales se pueden encontrar en mi Github (<https://github.com/JairEsc/Gob/tree/main/Accesibilidad/Documentacion>).
 
 ```{r rasters_1 ,message=FALSE,results = FALSE,echo=T}
 library(raster)
@@ -40,7 +40,7 @@ pendiente=raster("Inputs/pendiente.tif")
 carreteras=raster("Inputs/carreteras.tif")
 ```
 
-```{r, echo=F, include=T,out.width="100%"}
+```{r, echo=F, include=T,fig.align='center',out.width="100%"}
 par(mfrow=c(1, 3))
 plot(uso_de_suelo,main='Uso de suelo\nsegún vegetación',ylab=' ',xaxt='n',yaxt='n',xlab=' ')
 plot(pendiente,main='Pendiente',ylab=' ',xaxt='n',yaxt='n',xlab=' ')
@@ -76,7 +76,7 @@ Para cada raster, verificamos que coincidan los valores de:
 
 ## Calcular velocidad caminando según uso de suelo y pendiente.
 
-Se utiliza la fórmula descrita en [Github](<https://github.com/gip-itc-nl/accessibility_course_bhutan/blob/master/CSI_AccessibilityMapping_2up.pdf>)
+Se utiliza la fórmula descrita en [Github](https://github.com/gip-itc-nl/accessibility_course_bhutan/blob/master/CSI_AccessibilityMapping_2up.pdf)
 
 $$
 6*\exp(-0.4 \cdot |\tan(\frac{\pi * pendiente}{180})|+0.05)
@@ -84,7 +84,7 @@ $$
 
 Que si graficamos, se ve como sigue:
 
-```{r plot_cam ,echo=F}
+```{r plot_cam ,echo=F,fig.align='center'}
 plot(-90:90,6*exp(-0.4*abs(tan(-90:90*pi/180)))+0.05,'l',ylab='Velocidad km/h',main='Velocidad caminando\n en función de la pendiente',xlab='Grados')
 ```
 
@@ -99,7 +99,7 @@ terrain_walk_spd = uso_de_suelo * slp_walk# Calcula la velocidad sobre el terren
 
 ```
 
-```{r ,echo=F}
+```{r ,echo=F,fig.align='center'}
 plot(NA,xlim=extent(terrain_walk_spd)[c(1,2)],
      ylim=extent(terrain_walk_spd)[c(3,4)],main='Velocidad caminando\n en función de la pendiente y fricción del uso de suelo\n ',ylab=' ',xaxt='n',yaxt='n',xlab=' ')
 plot(terrain_walk_spd,add=T)
@@ -107,7 +107,7 @@ plot(terrain_walk_spd,add=T)
 
 ## Calcular velocidad en auto según velocidad en carretera y pendiente.
 
-Se utiliza la fórmula descrita en [Github](<https://github.com/gip-itc-nl/accessibility_course_bhutan/blob/master/CSI_AccessibilityMapping_2up.pdf>)
+Se utiliza la fórmula descrita en [Github](https://github.com/gip-itc-nl/accessibility_course_bhutan/blob/master/CSI_AccessibilityMapping_2up.pdf)
 
 $$
 50*\exp(-0.4 \cdot |\tan(\frac{\pi * pendiente}{180})|+0.12)
@@ -115,7 +115,7 @@ $$
 
 Que si graficamos, se ve como sigue:
 
-```{r auto, echo=F}
+```{r auto, echo=F,fig.align='center'}
 plot(-90:90,50 * exp(-0.4 * abs(tan(-90:90 * pi / 180) + 0.12)),'l',ylab='Velocidad km/h',main='Velocidad en auto en función de la pendiente',xlab='Grados')
 ```
 
@@ -130,7 +130,7 @@ sloped_road_spd = carreteras * slp_car / 50.0 # Calcula la velocidad ajustada po
 
 ```
 
-```{r ,echo=F}
+```{r ,echo=F,fig.align='center'}
 plot(NA,xlim=extent(sloped_road_spd)[c(1,2)],
      ylim=extent(sloped_road_spd)[c(3,4)],main='Velocidad en auto\n en función de la pendiente',ylab=' ',xaxt='n',yaxt='n',xlab=' ')
 plot(sloped_road_spd,add=T)
@@ -144,7 +144,7 @@ Superponemos los raster generados en orden de prioridad. Primero en auto y despu
 merged_spd = merge(sloped_road_spd, terrain_walk_spd)     # Combina los rasters de velocidad de carreteras y terreno.
 ```
 
-```{r merge_plot, echo=F}
+```{r merge_plot, echo=F,fig.align='center'}
 plot(merged_spd,ylab=' ',xaxt='n',yaxt='n',xlab=' ')
 ```
 
@@ -177,7 +177,7 @@ lugares_destino_ficticios=st_sample(hidalgo$geometry,n)
 
 Para calcular el tiempo de traslado, utilizamos la función :
 
-```{r tiempo}
+```{r tiempo, fig.align='center'}
 tiempo = accCost(T.GC, matrix(unlist(lugares_destino_ficticios),nrow = n,ncol = 2,byrow = T))  # Calcula el costo acumulado desde un punto de inicio (coordenadas especificadas) usando la matriz de transición corregida (T.GC).
 plot(tiempo, main='Tiempo de traslado al destino más cercano',ylab=' ',xaxt='n',yaxt='n',xlab=' ')
 plot(lugares_destino_ficticios,add=T)
