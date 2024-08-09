@@ -1,0 +1,185 @@
+---
+title: "Accesibilidad"
+author: "Jair Escobar"
+date: "2024-08-07"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Tiempo de traslado
+
+Este es un tutorial de cómo hacer análisis de accesibilidad siguiendo la metodología de Andy Nelson & Rolf de By. Para ver más detalles, se puede consultar el siguiente Github (<https://github.com/gip-itc-nl/accessibility_course_bhutan>) donde además de un ejemplo, se encuentra una presentación con el desarrollo de la metodología y el código necesario para replicarlo.
+
+En este ejercicio, nos concentraremos en la Accesibilidad de $lugares$\_$destino$ en el estado de Hidalgo, los cuales podrían ser hospitales, centros comerciales, oficinas, etc.
+
+## Para ello, consideraremos rasters de :
+
+-   Uso de suelo según vegetación.
+
+-   Pendiente.
+
+-   Carreteras con velocidad máxima.
+
+    Los cuales, naturalmente, se obtienen de una rasterización de sus versiones vectoriales. Por ejemplo, para calcular la versión Raster de uso de suelo según vegetación se considera el coeficiente de fricción de cada tipo de vegetación
+
+```{r friccion, include=TRUE, echo=FALSE, fig.align='center'}
+knitr::include_graphics("friccion.PNG" )
+```
+
+## Rasters a utilizar
+
+A continuación mostramos los archivos .tif utilizados:
+
+```{r rasters_1 ,message=FALSE,results = FALSE,echo=T}
+library(raster)
+uso_de_suelo=raster("Inputs/uso_de_suelo_friccion.tif")
+pendiente=raster("Inputs/pendiente.tif")
+carreteras=raster("Inputs/carreteras.tif")
+```
+
+```{r, echo=F, include=T,out.width="100%"}
+par(mfrow=c(1, 3))
+plot(uso_de_suelo,main='Uso de suelo\nsegún vegetación',ylab=' ',xaxt='n',yaxt='n',xlab=' ')
+plot(pendiente,main='Pendiente',ylab=' ',xaxt='n',yaxt='n',xlab=' ')
+plot(carreteras,main='Carreteras',ylab=' ',xaxt='n',yaxt='n',xlab=' ')
+par(mfrow=c(1, 1))
+```
+
+Siguiendo la metodología de (Andy Nelson & Rolf de By):
+
+-   Verificamos los datos en común de los raster.
+
+-   Calcular velocidad caminando según uso de suelo y pendiente.
+
+-   Calcular velocidad en auto según velocidad en carretera y pendiente.
+
+    ## Verificamos los datos en común de los raster.
+
+    ```{r raster_2}
+    carreteras
+    ```
+
+Para cada raster, verificamos que coincidan los valores de:
+
+-   dimensions
+
+-   resolution
+
+-   extent
+
+-   crs
+
+    Nos ahorraremos muchas dificultades técnicas si esto ocurre. En nuestro caso, sí se cumple.
+
+## Calcular velocidad caminando según uso de suelo y pendiente.
+
+Se utiliza la fórmula descrita en [Github](<https://github.com/gip-itc-nl/accessibility_course_bhutan/blob/master/CSI_AccessibilityMapping_2up.pdf>)
+
+$$
+6*\exp(-0.4 \cdot |\tan(\frac{\pi * pendiente}{180})|+0.05)
+$$
+
+Que si graficamos, se ve como sigue:
+
+```{r plot_cam ,echo=F}
+plot(-90:90,6*exp(-0.4*abs(tan(-90:90*pi/180)))+0.05,'l',ylab='Velocidad km/h',main='Velocidad caminando\n en función de la pendiente',xlab='Grados')
+```
+
+Se interpreta como una velocidad de caminata según una pendiente, con valor máximo de \$6\$ cuando la pendiente es cero.
+
+### Definición del raster de velocidad de caminata según uso de suelo y pendiente
+
+```{r caminando}
+slp_walk = 6 * exp(-0.4 * abs(tan(pendiente * pi / 180) + 0.05))  # Calcula la velocidad de caminata ajustada por la pendiente.
+
+terrain_walk_spd = uso_de_suelo * slp_walk# Calcula la velocidad sobre el terreno ajustada por la pendiente y el uso de suelo.
+
+```
+
+```{r ,echo=F}
+plot(NA,xlim=extent(terrain_walk_spd)[c(1,2)],
+     ylim=extent(terrain_walk_spd)[c(3,4)],main='Velocidad caminando\n en función de la pendiente y fricción del uso de suelo\n ',ylab=' ',xaxt='n',yaxt='n',xlab=' ')
+plot(terrain_walk_spd,add=T)
+```
+
+## Calcular velocidad en auto según velocidad en carretera y pendiente.
+
+Se utiliza la fórmula descrita en [Github](<https://github.com/gip-itc-nl/accessibility_course_bhutan/blob/master/CSI_AccessibilityMapping_2up.pdf>)
+
+$$
+50*\exp(-0.4 \cdot |\tan(\frac{\pi * pendiente}{180})|+0.12)
+$$
+
+Que si graficamos, se ve como sigue:
+
+```{r auto, echo=F}
+plot(-90:90,50 * exp(-0.4 * abs(tan(-90:90 * pi / 180) + 0.12)),'l',ylab='Velocidad km/h',main='Velocidad en auto en función de la pendiente',xlab='Grados')
+```
+
+La interpretación es la misma que en el caso a pie. $50$ kilometros por hora es la velocidad promedio para una pendiente de 0 grados.
+
+### Definición del raster de velocidad de caminata según uso de suelo y pendiente
+
+```{r caminando_2}
+slp_car = 50 * exp(-0.4 * abs(tan(pendiente * pi / 180) + 0.12))  # Calcula la velocidad sobre carreteras ajustada por la pendiente.
+
+sloped_road_spd = carreteras * slp_car / 50.0 # Calcula la velocidad ajustada por pendiente para carreteras y la convierte en un raster.
+
+```
+
+```{r ,echo=F}
+plot(NA,xlim=extent(sloped_road_spd)[c(1,2)],
+     ylim=extent(sloped_road_spd)[c(3,4)],main='Velocidad en auto\n en función de la pendiente',ylab=' ',xaxt='n',yaxt='n',xlab=' ')
+plot(sloped_road_spd,add=T)
+```
+
+## Cálculo de tiempo de traslado.
+
+Superponemos los raster generados en orden de prioridad. Primero en auto y después a pie:
+
+```{r merge}
+merged_spd = merge(sloped_road_spd, terrain_walk_spd)     # Combina los rasters de velocidad de carreteras y terreno.
+```
+
+```{r merge_plot, echo=F}
+plot(merged_spd,ylab=' ',xaxt='n',yaxt='n',xlab=' ')
+```
+
+Definimos la fricción de cada pixel del raster en metros por minuto:
+
+```{r}
+friction = 1.0 / (merged_spd * 1000 / 60.0 ) 
+```
+
+Técnicamente, lo que haremos adelante es calcular una matríz de transición entre pixeles en las 8 direcciones posibles:
+
+```{r friccion_2, results=F,message=FALSE}
+library(gdistance)
+Trans = transition(friction, function(x) 1 / mean(x), 8)  # Crea una matriz de transición basada en la fricción.
+T.GC = geoCorrection(Trans, type="c")
+```
+
+Con lo anterior, podemos calcular el tiempo de traslado dada una ubicación de origen y una de destino. Naturalmente, la ubicación de origen puede ser cualquier pixel de nuestro raster, y el tiempo de traslado se calcula con la matriz de transición utilizando la ruta más corta hacia el lugar de destino.
+
+Con fines didácticos, consideraremos $lugares$\_$destino$ de manera aleatoria dentro del estado, pero recordando de la introducción, que pueden ser cualquier ubicación.
+
+#### Definición de lugares destino:
+
+```{r, echo=T,results=F,message=FALSE}
+library(sf)
+hidalgo=st_read("Inputs/hidalgo/LIM_MUNICIPALES.shp")
+n=7
+lugares_destino_ficticios=st_sample(hidalgo$geometry,n)
+```
+
+Para calcular el tiempo de traslado, utilizamos la función :
+
+```{r tiempo}
+tiempo = accCost(T.GC, matrix(unlist(lugares_destino_ficticios),nrow = n,ncol = 2,byrow = T))  # Calcula el costo acumulado desde un punto de inicio (coordenadas especificadas) usando la matriz de transición corregida (T.GC).
+plot(tiempo, main='Tiempo de traslado al destino más cercano',ylab=' ',xaxt='n',yaxt='n',xlab=' ')
+plot(lugares_destino_ficticios,add=T)
+legend("topleft", legend=c("Lugares destino"), pch = 'o', cex=0.5)
+```
