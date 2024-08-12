@@ -19,7 +19,7 @@ function openChart(evt, tagName) {
     evt.currentTarget.className += " active";
     window.dispatchEvent(new Event("resize"));
   }
-function linearRegression(y,x){
+  function linearRegression(y,x){
     var lr = {};
     var n = y.length;
     var sum_x = 0;
@@ -27,28 +27,27 @@ function linearRegression(y,x){
     var sum_xy = 0;
     var sum_xx = 0;
     var sum_yy = 0;
-
     for (var i = 0; i < y.length; i++) {
-
         sum_x += x[i];
         sum_y += y[i];
         sum_xy += (x[i]*y[i]);
         sum_xx += (x[i]*x[i]);
         sum_yy += (y[i]*y[i]);
     } 
-
     lr['slope'] = (n * sum_xy - sum_x * sum_y) / (n*sum_xx - sum_x * sum_x);
     lr['intercept'] = (sum_y - lr.slope * sum_x)/n;
     lr['r2'] = Math.pow((n*sum_xy - sum_x*sum_y)/Math.sqrt((n*sum_xx-sum_x*sum_x)*(n*sum_yy-sum_y*sum_y)),2);
-
     return lr;
 }
 document.getElementById("defaultOpen").click();
 
 B.onChange = function(newValue) {
+    console.log("Ultimo estado seleccionado " + newValue);
     chart_nac.data.datasets[0].backgroundColor.fill('rgba(75, 192, 192, 0.2)')
-    chart_nac.data.datasets[0].backgroundColor[13-1] = 'rgba(75, 192, 192, 1)'
-    chart_nac.data.datasets[0].backgroundColor[newValue-1]='rgba(75, 192, 192, 1)'
+    var sortedEstados=chart_nac.data.labels;
+    console.log(sortedEstados);
+    chart_nac.data.datasets[0].backgroundColor[sortedEstados.indexOf("Hidalgo")] = 'rgba(75, 192, 192, 1)'
+    chart_nac.data.datasets[0].backgroundColor[sortedEstados.indexOf(newValue)]='rgba(75, 192, 192, 1)'
     chart_nac.update();
 };
 document.addEventListener("DOMContentLoaded", function() {
@@ -63,14 +62,22 @@ document.addEventListener("DOMContentLoaded", function() {
                         names=line.trim();
                     nac.push(line.split(','))  
                 });
+                var SortedEstados=nac[0].slice(3).map(x=>JSON.parse(x))//sus nombres originales
+                var datosEstados=nac[1].slice(3)//datos originales
+                const combined_Estados = datosEstados.map((dato_est, index) => ({
+                            dato: SortedEstados[index], // Nombre estado
+                            value: dato_est // y su valor
+                        })).sort((a, b) => b.value-a.value);//orden segun su valor
+                SortedEstados = combined_Estados.map(item => item.dato.toString()); // Convertir a cadena
+                datosEstados = combined_Estados.map(item => item.value); // datos en orden
                 const ctx_nac = document.getElementById('nacional').getContext('2d');
                 chart_nac = new Chart(ctx_nac, {
                     type: 'bar',
                     data: {
-                        labels: nac[0].slice(3).map(x=>JSON.parse(x)),
+                        labels: SortedEstados,
                         datasets: [{
                             label: JSON.parse(nac[1]['0']),
-                            data: nac[1].slice(3),
+                            data: datosEstados,
                             backgroundColor: nac[1].slice(3).fill('rgba(75, 192, 192, 0.2)'),
                             borderColor: 'rgba(75, 192, 192, 1)',
                             borderWidth: 1
@@ -84,16 +91,14 @@ document.addEventListener("DOMContentLoaded", function() {
                         },
                     }
                 });
-                chart_nac.data.datasets[0].backgroundColor[13-1] = 'rgba(75, 192, 192, 1)'
+                chart_nac.data.datasets[0].backgroundColor[SortedEstados.indexOf("Hidalgo")] = 'rgba(75, 192, 192, 1)'//Va a cambiar
     })
-    
     fetch('Datos/hidalgo_base.csv')
         .then(response => response.text())
         .then(data => {
             const lines = data.split('\n');
             const select = document.getElementById('indicador');
             var uniqueIndicators = new Set();
-
             lines.forEach((line, index) => {
                 if (index === 0) return; // Skip the header
                 var indicadorValue=line.split(',')[1].trim();
@@ -102,11 +107,9 @@ document.addEventListener("DOMContentLoaded", function() {
                     option.value = indicadorValue;
                     option.text = indicadorValue;
                     select.appendChild(option);
-        
                     // Add the value to the set
                     uniqueIndicators.add(indicadorValue);
                 }
-                
             });
         })
         .catch(error => console.error('Error fetching the CSV file:', error));
@@ -126,23 +129,23 @@ document.addEventListener("DOMContentLoaded", function() {
                     datos.push(parseFloat(line.split(',')[3].trim()))
                 }
             });
-            var combined = years.map((year, index) => ({
+            const combined = years.map((year, index) => ({
                 year: parseInt(JSON.parse(year), 10), // Convertir año a número
                 value: datos[index]
             })).sort((a, b) => a.year - b.year);
 
-            var sortedYears = combined.map(item => item.year.toString()); // Convertir años de nuevo a string
-            var sortedDatos = combined.map(item => item.value);
-            var x=combined.map(item => item.year).sort()
-            lr=linearRegression(sortedDatos,x)
-            x_0=lr['intercept'];
-            p=lr['slope'];
-            x.push(x[x.length-1]+1)//2023 va a ser funcion de x
+            const sortedYears = combined.map(item => item.year.toString()); // Convertir años de nuevo a string
+            const sortedDatos = combined.map(item => item.value);
+            var x_original=combined.map(item => item.year).sort()
+            const lr=linearRegression(sortedDatos,x_original)
+            const x_0=lr['intercept'];
+            const p=lr['slope'];
+            x_original.push(x_original[x_original.length-1]+1)//2023 va a ser funcion de x
             if (chart) {
                 // Actualizar la gráfica existente
-                chart.data.labels = sortedYears;
+                chart.data.labels = x_original;
                 chart.data.datasets[0].data = sortedDatos;
-                chart.data.datasets[1].data = x.map(function(y) { return x_0+y * p; });
+                chart.data.datasets[1].data = x_original.map(function(y) { return x_0+y * p; });
                 chart.data.datasets[0].label=$(this).val();
                 chart.update();
             } else {
@@ -151,7 +154,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 chart = new Chart(ctx, {
                     type: 'line',
                     data: {
-                        labels: x.sort(),
+                        labels: x_original,
                         datasets: [{
                             label: $(this).val(),
                             data: sortedDatos,
@@ -161,7 +164,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         },
                         {
                             label: 'Regresión',
-                            data: x.map(function(y) { return x_0+y * p; }),
+                            data: x_original.map(function(y) { return x_0+y * p; }),
                         },]
                     },
                     options: {

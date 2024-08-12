@@ -8,7 +8,7 @@ body {
 }
 
 .container {
-    width: 95%;
+    width: 75%;
     margin: 0 auto;
     background-color: #fff;
     padding: 20px;
@@ -52,7 +52,7 @@ header {
     background-color: #800000;
     color: #fff;
     padding: 20px;
-    margin: 20px 0;
+    margin: 5px 0;
 }
 
 .indicator-description h2 {
@@ -78,7 +78,7 @@ table th, table td {
 
 .chart {
     width: 100%;
-    height: 45%;
+    height: 100%;
 }
 
 .indicator-footer {

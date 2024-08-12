@@ -29,6 +29,7 @@ poligonos_map = L.geoJson(mexico, {
 }).addTo(map)
 map.fitBounds(poligonos_map.getBounds());
 var ultimo_seleccionado='Hidalgo'
+
 function highlightFeature(e) {
     var layer = e.target;
 
@@ -40,7 +41,7 @@ function highlightFeature(e) {
 
     layer.bringToFront();
     info.update(layer.feature.properties);
-    B.myVariable =parseInt(e.target.feature.properties.CVEGEO)
+    B.myVariable =e.target.feature.properties.NOMGEO;
 }
 
 function resetHighlight(e) {
