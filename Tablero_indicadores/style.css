@@ -77,8 +77,15 @@ table th, table td {
 }
 
 .chart {
+    width: 800px;
+    height: 400px;
+    display: block; /* Asegura que el canvas se comporte como un bloque */
+    margin: auto; /* Esto centra el canvas horizontalmente */
+}
+.chart2 {
     width: 100%;
-    height: 100%;
+    height: 400px;
+    /*background-color: #f0f0f0;*/ /*Cambia el fondo de todo el div*/
 }
 
 .indicator-footer {
@@ -118,15 +125,36 @@ table th, table td {
   
   /* Style the tab content */
   .tabcontent {
-    width: 95%;
+    width: 100%;
     align-content:center;
-    height: 60%;
+    height: 400px;
+    display: block;
+    border-top: none;
+  }
+  .tabcontent_hist {
+    width: 100%;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: none;
+}
+  tabcontent_nac {
+    width: 60%;
+    align-content:end;
+    height: 400px;
     display: block;
     border: 1px solid #ccc;
     border-top: none;
+    float: right;
   }
-  #map { height: 480px; 
+  #map { height: 400px; 
     opacity: 0.5;
+    width: 39%;
+    margin-right: 0px;
+}
+.float {
+    float:left;
 }
 .info {
     padding: 6px 8px;

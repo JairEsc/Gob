@@ -1,24 +1,21 @@
 function openChart(evt, tagName) {
     // Declare all variables
     var i, tabcontent, tablinks;
-  
     // Get all elements with class="tabcontent" and hide them
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
       tabcontent[i].style.display = "none";
     }
-  
     // Get all elements with class="tablinks" and remove the class "active"
     tablinks = document.getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
       tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
-  
     // Show the current tab, and add an "active" class to the button that opened the tab
-    document.getElementById(tagName).style.display = "block";
+    document.getElementById(tagName).style.display = "flex";
     evt.currentTarget.className += " active";
     window.dispatchEvent(new Event("resize"));
-  }
+}
   function linearRegression(y,x){
     var lr = {};
     var n = y.length;
@@ -223,12 +220,26 @@ document.addEventListener("DOMContentLoaded", function() {
                         },]
                     },
                     options: {
+                        plugins: {chartArea: {
+                            backgroundColor: 'rgba(240, 240, 240, 1)' // Cambia este color a lo que desees
+                        }},
                         scales: {
                             y: {
                                 beginAtZero: false,
                             }
                         },
-                    }
+                    },
+                    /*plugins: [{
+                        id: 'custom_canvas_background_color',
+                        beforeDraw: (chart) => {
+                            const ctx = chart.canvas.getContext('2d');
+                            ctx.save();
+                            ctx.globalCompositeOperation = 'destination-over';
+                            ctx.fillStyle = '#d4c2a3'; // Cambia a tu color de fondo deseado
+                            ctx.fillRect(0, 0, chart.width, chart.height);
+                            ctx.restore();
+                        }
+                    }]*/
                 });
             }
         })
