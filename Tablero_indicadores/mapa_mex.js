@@ -6,6 +6,40 @@ var map = L.map('map',{
     maxBounds: bounds,        // Establecer los límites máximos
     maxBoundsViscosity: 1.0
 }).fitBounds(bounds);
+function getColor(d) {
+    return d==1? "#a50026":
+    d==2? "#b50f26":
+    d==3? "#c51f27":
+    d==4? "#d52e27":
+    d==5? "#df422f":
+    d==6? "#e95538":
+    d==7? "#f26941":
+    d==8? "#f67e4b":
+    d==9? "#f99354":
+    d==10? "#fca85e":
+    d==11? "#fdb96a":
+    d==12? "#fec978":
+    d==13? "#feda86":
+    d==14? "#fee695":
+    d==15? "#fff0a6":
+    d==16? "#fffab7":
+    d==17? "#f9fcb7":
+    d==18? "#edf7a6":
+    d==19? "#e0f295":
+    d==20? "#d2ec87":
+    d==21? "#c2e57c":
+    d==22? "#b2de71":
+    d==23? "#a0d669":
+    d==24? "#8bcd67":
+    d==25? "#77c465":
+    d==26? "#61bb62":
+    d==27? "#49af5c":
+    d==28? "#30a356":
+    d==29? "#19964f":
+    d==30? "#118747":
+    d==31? "#08773f":
+    d==32? "#006837":'#B65C51'
+}
 L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_toner_background/{z}/{x}/{y}{r}.{ext}', {
 	minZoom: 4,
 	maxZoom: 15,

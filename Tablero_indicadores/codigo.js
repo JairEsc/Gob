@@ -65,16 +65,11 @@ function fetchData(data,valor){//Dado un conjunto de datos y una elección de te
     });
 }
 document.getElementById("defaultOpen").click();//El histórico es la gráfica por default.
-B.onChange = function(newValue) {//Define una variable "global" que se usa en el script del mapa de méxico.
-    //console.log("Ultimo estado seleccionado " + newValue);
-    chart_nac.data.datasets[0].backgroundColor.fill('rgba(75, 192, 192, 0.2)')
-    var sortedEstados=chart_nac.data.labels;
-    chart_nac.data.datasets[0].backgroundColor[sortedEstados.indexOf("Hidalgo")] = 'rgba(75, 192, 192, 1)'
-    chart_nac.data.datasets[0].backgroundColor[sortedEstados.indexOf(newValue)]='rgba(75, 192, 192, 1)'
-    chart_nac.update();
-};
+
 document.addEventListener("DOMContentLoaded", function() {//Inicia el procesamiento una vez que está cargada la página.
-    let chart,chart_nac;
+    let chart;
+    
+
     /*De aquí a----------------------------------------------------------------- */
     /*Tengo otra de prueba. Lo acomodaré a esa. */
     
@@ -91,6 +86,7 @@ document.addEventListener("DOMContentLoaded", function() {//Inicia el procesamie
     
     $("#indicador").change(function () {//cuando cambia el valor del indicador:
         //aquí debe ir el fetch del nacional
+        //chart_nac.destroy();
         fetch('Datos/Nacional.csv')//Lo primero que hace es descargar los datos
     .then(response => response.text())//después, lo convierte a texto
     .then(data=> {//después, hará lo siguiente:
@@ -98,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function() {//Inicia el procesamie
                 nac=[]
                 //console.log($(this).val())
                 
-                let parsedData = lines.map(line => {
+                lines.map(line => {
                     
                     if(line.split(",")[1].replace(/^"|"$/g, '')===$(this).val().normalize() || line.split(",")[0].replace(/^"|"$/g, '')=='Tema'){
                         let values = [];
@@ -119,25 +115,29 @@ document.addEventListener("DOMContentLoaded", function() {//Inicia el procesamie
                         nac.push(values)
                     }
                 });
-                console.log(nac);
-                var SortedEstados=nac[0].slice(5).map(x=>x)//sus nombres originales
-                var datosEstados=nac[1].slice(5)//datos originales
+                var OriginalEstados=nac[0].slice(4).map(x=>x)//sus nombres originales
+                var datosEstados=nac[1].slice(4)//datos originales
                 ///Falta hacer algo con los NA. Después, podría 
                 const combined_Estados = datosEstados.map((dato_est, index) => ({
-                            dato: SortedEstados[index], // Nombre estado
+                            dato: OriginalEstados[index], // Nombre estado
                             value: dato_est=='NA'? null:dato_est, // y su valor
                         })).sort((a, b) => b.value-a.value);//orden segun su valor
                 console.log(combined_Estados)
                 SortedEstados = combined_Estados.map(item => item.dato.toString()); // Convertir a cadena
+                indexedEstados=OriginalEstados.map(item => SortedEstados.indexOf(item.toString()))//indices de los estados según su posición respecto al indicador
+                console.log(indexedEstados)
                 datosEstados = combined_Estados.map(item => item.value); // datos en orden
-                if(chart_nac){
+                /*if(chart_nac){
                     chart_nac.data.datasets[0].labels = SortedEstados;
                     chart_nac.data.datasets[0].data = datosEstados;
                     chart_nac.data.datasets[0].label=$(this).val();
                     chart_nac.update();
                 }
-                else{
-                    const ctx_nac = document.getElementById('nacional').getContext('2d');//inicio a crear la gráfica
+                else{*/
+                if (typeof chart_nac != "undefined") {
+                    chart_nac.destroy()
+                 }
+                const ctx_nac = document.getElementById('nacional').getContext('2d');//inicio a crear la gráfica
                     chart_nac = new Chart(ctx_nac, {
                         type: 'bar',
                         data: {
@@ -159,7 +159,7 @@ document.addEventListener("DOMContentLoaded", function() {//Inicia el procesamie
                         }
                     });
                     chart_nac.data.datasets[0].backgroundColor[SortedEstados.indexOf("Hidalgo")] = 'rgba(75, 192, 192, 1)'//Ilumino a Hidalgo
-                }
+                /*}*/
                 
     })
         //console.log($(this).val())
@@ -276,3 +276,11 @@ document.addEventListener("DOMContentLoaded", function() {//Inicia el procesamie
         .catch(error => console.error('Error fetching the CSV file:', error));
     });
 });
+B.onChange = function(newValue) {//Define una variable "global" que se usa en el script del mapa de méxico.
+    console.log("Ultimo estado seleccionado " + newValue);
+    chart_nac.data.datasets[0].backgroundColor.fill('rgba(75, 192, 192, 0.2)')
+    var sortedEstados=chart_nac.data.labels;
+    chart_nac.data.datasets[0].backgroundColor[sortedEstados.indexOf("Hidalgo")] = 'rgba(75, 192, 192, 1)'
+    chart_nac.data.datasets[0].backgroundColor[sortedEstados.indexOf(newValue)]='rgba(75, 192, 192, 1)'
+    chart_nac.update();
+};
