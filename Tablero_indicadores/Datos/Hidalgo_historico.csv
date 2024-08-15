@@ -4,8 +4,8 @@ Medio Ambiente,Áreas naturales protegidas de competencia todas las competencias
 Medio Ambiente,Áreas naturales protegidas de competencia todas las competencias,2017,131305.9
 Medio Ambiente,Áreas naturales protegidas de competencia todas las competencias,2022,131667
 Medio Ambiente,Áreas naturales protegidas de competencia todas las competencias,2023,395
-Economico,Aves Producción (toneladas),2022,120227.523
-Economico,Aves Valor de la Producción (miles de pesos),2022,3240727.673
+Económico,Aves Producción (toneladas),2022,120227.523
+Económico,Aves Valor de la Producción (miles de pesos),2022,3240727.673
 Gobierno,Barometro de Información Presupuestal Estatal BIPE,2023,97.41
 Medio Ambiente,Capacidad instalada en las PTARs  (Litros por segundo),2017,2040.2
 Medio Ambiente,Capacidad instalada en las PTARs  (Litros por segundo),2018,1989.4
@@ -34,8 +34,8 @@ Social,Carencia por calidad y espacios de la vivienda,2016,11.2254388
 Social,Carencia por calidad y espacios de la vivienda,2018,9.8
 Social,Carencia por calidad y espacios de la vivienda,2020,7.9
 Social,Carencia por calidad y espacios de la vivienda,2022,6.4
-Economico,Cera Producción (toneladas),2022,44.781
-Economico,Cera Valor de la Producción (miles de pesos),2022,3604.333
+Económico,Cera Producción (toneladas),2022,44.781
+Económico,Cera Valor de la Producción (miles de pesos),2022,3604.333
 Seguridad,Cifra negra,2014,93.5
 Seguridad,Cifra negra,2015,87.2
 Seguridad,Cifra negra,2016,89.7
@@ -93,13 +93,13 @@ Gobierno,Confianza en el Gobierno Estatal,2017,44.1
 Gobierno,Confianza en el Gobierno Estatal,2019,41.2
 Gobierno,Confianza en el Gobierno Estatal,2021,46.4
 Gobierno,Confianza en el Gobierno Estatal,2023,48.5
-Economico,Crecimiento económico (porcentaje),2024,6.4
-Economico,Cuartos de establecimientos de Hospedaje,2021,15003
-Economico,Cuartos de Hospedaje según categoría 1 estrella,2021,914
-Economico,Cuartos de Hospedaje según categoría 2 estrellas,2021,2364
-Economico,Cuartos de Hospedaje según categoría 3 estrellas,2021,4052
-Economico,Cuartos de Hospedaje según categoría 4 estrellas,2021,1931
-Economico,Cuartos de Hospedaje según categoría 5 estrellas,2021,1057
+Económico,Crecimiento económico (porcentaje),2024,6.4
+Económico,Cuartos de establecimientos de Hospedaje,2021,15003
+Económico,Cuartos de Hospedaje según categoría 1 estrella,2021,914
+Económico,Cuartos de Hospedaje según categoría 2 estrellas,2021,2364
+Económico,Cuartos de Hospedaje según categoría 3 estrellas,2021,4052
+Económico,Cuartos de Hospedaje según categoría 4 estrellas,2021,1931
+Económico,Cuartos de Hospedaje según categoría 5 estrellas,2021,1057
 Seguridad,Defunciones,2015,14595
 Seguridad,Defunciones,2016,15391
 Seguridad,Defunciones,2017,15675
@@ -108,8 +108,8 @@ Seguridad,Defunciones,2019,16414
 Seguridad,Defunciones,2020,22655
 Seguridad,Defunciones,2021,25106
 Seguridad,Defunciones,2022,18575
-Economico,Desigualdad laboral (coeficiente de Gini),2021,0.4
-Economico,Deuda Pública (Porcentaje del PIB),2023,1.5
+Económico,Desigualdad laboral (coeficiente de Gini),2021,0.4
+Económico,Deuda Pública (Porcentaje del PIB),2023,1.5
 Social,Eficiencia Terminal Primaria,2013,102.4
 Social,Eficiencia Terminal Primaria,2014,103.1
 Social,Eficiencia Terminal Primaria,2015,103
@@ -143,14 +143,14 @@ Medio Ambiente,Emisiones de Contaminantes,2005,1182007.77
 Medio Ambiente,Emisiones de Contaminantes,2008,887217.1808
 Medio Ambiente,Emisiones de Contaminantes,2013,806918.2569
 Medio Ambiente,Emisiones de Contaminantes,2016,766396.8261
-Economico,Empleos Formales Generados Acumulados,2024,9214
-Economico,Establecimiento de Hospedaje,2021,713
-Economico,Establecimiento de Hospedaje según categoría 1 estrella,2021,48
-Economico,Establecimiento de Hospedaje según categoría 2 estrellas,2021,95
-Economico,Establecimiento de Hospedaje según categoría 3 estrellas,2021,129
-Economico,Establecimiento de Hospedaje según categoría 4 estrellas,2021,50
-Economico,Establecimiento de Hospedaje según categoría 5 estrellas,2021,25
-Economico,Exportaciones,2023,904187
+Económico,Empleos Formales Generados Acumulados,2024,9214
+Económico,Establecimiento de Hospedaje,2021,713
+Económico,Establecimiento de Hospedaje según categoría 1 estrella,2021,48
+Económico,Establecimiento de Hospedaje según categoría 2 estrellas,2021,95
+Económico,Establecimiento de Hospedaje según categoría 3 estrellas,2021,129
+Económico,Establecimiento de Hospedaje según categoría 4 estrellas,2021,50
+Económico,Establecimiento de Hospedaje según categoría 5 estrellas,2021,25
+Económico,Exportaciones,2023,904187
 Seguridad,Extorsión,2015,42
 Seguridad,Extorsión,2016,80
 Seguridad,Extorsión,2017,132
@@ -170,15 +170,15 @@ Seguridad,Feminicidio,2021,21
 Seguridad,Feminicidio,2022,19
 Seguridad,Feminicidio,2023,20
 Seguridad,Feminicidio,2024,7
-Economico,Ganado Bovino Producción (toneladas),2022,60644.866
-Economico,Ganado Bovino Valor de la Producción (miles de pesos),2022,2245898.095
-Economico,Ganado Caprino Producción (toneladas),2022,1546.847
-Economico,Ganado Caprino Valor de la Producción (miles de pesos),2022,57666.874
-Economico,Ganado Ovino Producción (toneladas),2022,13273.775
-Economico,Ganado Ovino Valor de la Producción (miles de pesos),2022,620638.095
-Economico,Ganado Porcino Producción (toneladas),2022,21421.659
-Economico,Ganado Porcino Valor de la Producción (miles de pesos),2022,724862.187
-Economico,Gasto corriente promedio trimestral por hogar (tabla 4.7),2022,34086
+Económico,Ganado Bovino Producción (toneladas),2022,60644.866
+Económico,Ganado Bovino Valor de la Producción (miles de pesos),2022,2245898.095
+Económico,Ganado Caprino Producción (toneladas),2022,1546.847
+Económico,Ganado Caprino Valor de la Producción (miles de pesos),2022,57666.874
+Económico,Ganado Ovino Producción (toneladas),2022,13273.775
+Económico,Ganado Ovino Valor de la Producción (miles de pesos),2022,620638.095
+Económico,Ganado Porcino Producción (toneladas),2022,21421.659
+Económico,Ganado Porcino Valor de la Producción (miles de pesos),2022,724862.187
+Económico,Gasto corriente promedio trimestral por hogar (tabla 4.7),2022,34086
 Social,Grado Promedio de Escolaridad,2015,8.6
 Social,Grado Promedio de Escolaridad,2016,8.7
 Social,Grado Promedio de Escolaridad,2017,8.9
@@ -187,8 +187,8 @@ Social,Grado Promedio de Escolaridad,2019,9.1
 Social,Grado Promedio de Escolaridad,2020,9.37
 Social,Grado Promedio de Escolaridad,2022,9.37
 Social,Grado Promedio de Escolaridad,2023,9.4
-Economico,Guajolotes Producción (toneladas),2022,1463.343
-Economico,Guajolotes Valor de la Producción (miles de pesos),2022,58946.359
+Económico,Guajolotes Producción (toneladas),2022,1463.343
+Económico,Guajolotes Valor de la Producción (miles de pesos),2022,58946.359
 Seguridad,Homicidios,2015,146
 Seguridad,Homicidios,2016,653
 Seguridad,Homicidios,2017,700
@@ -199,8 +199,8 @@ Seguridad,Homicidios,2021,530
 Seguridad,Homicidios,2022,545
 Seguridad,Homicidios,2023,379
 Seguridad,Homicidios,2024,228
-Economico,Huevo para plato Producción (toneladas),2022,6730.361
-Economico,Huevo para plato Valor de la Producción (miles de pesos),2022,214095.822
+Económico,Huevo para plato Producción (toneladas),2022,6730.361
+Económico,Huevo para plato Valor de la Producción (miles de pesos),2022,214095.822
 Seguridad,Incidencia Delictiva del Fuero Común,2015,27504
 Seguridad,Incidencia Delictiva del Fuero Común,2016,33753
 Seguridad,Incidencia Delictiva del Fuero Común,2017,43963
@@ -211,9 +211,9 @@ Seguridad,Incidencia Delictiva del Fuero Común,2021,46464
 Seguridad,Incidencia Delictiva del Fuero Común,2022,52588
 Seguridad,Incidencia Delictiva del Fuero Común,2023,57225
 Seguridad,Incidencia Delictiva del Fuero Común,2024,27925
-Economico,Indicador Mensual de la Actividad Industrial por Entidad Federativa (IMAIEF),2023,121.2
-Economico,Índicador Trimestral de la Actividad Económica Estatal ITAEE,2024,108.1
-Economico,Índice de Competitividad Estatal ICE,2024,33.3
+Económico,Indicador Mensual de la Actividad Industrial por Entidad Federativa (IMAIEF),2023,121.2
+Económico,Índicador Trimestral de la Actividad Económica Estatal ITAEE,2024,108.1
+Económico,Índice de Competitividad Estatal ICE,2024,33.3
 Gobierno,Índice de Desarrollo Democrático IDD-Mex,2017,1828
 Gobierno,Índice de Desarrollo Democrático IDD-Mex,2018,4751
 Gobierno,Índice de Desarrollo Democrático IDD-Mex,2019,6892
@@ -224,7 +224,7 @@ Gobierno,Índice de Desarrollo Democrático IDD-Mex,2023,5755
 Social,Índice de Intensidad Migratoria DP2,2000,3.34
 Social,Índice de Intensidad Migratoria DP2,2010,6.47
 Social,Índice de Intensidad Migratoria DP2,2020,18.89
-Economico,Índice de la Tendencia Laboral de la Pobreza (ITLP),2024,0.8633
+Económico,Índice de la Tendencia Laboral de la Pobreza (ITLP),2024,0.8633
 Social,Índice de marginación,2010,7.3
 Social,Índice de marginación,2015,13.5
 Social,Índice de marginación,2020,18.053
@@ -274,9 +274,9 @@ Gobierno,Índice del Estado de Derecho,2022,0.44
 Gobierno,Índice Global de Impunidad,2016,67.9
 Gobierno,Índice Global de Impunidad,2018,70.47
 Gobierno,Índice Global de Impunidad,2022,61.71
-Economico,Informalidad (porcentaje),2023,70.6
-Economico,Ingreso corriente promedio trimestral por hogar,2022,53234
-Economico,"Ingreso laboral Per capita (Deflactado con la canasta alimentaria, pesos)",2024,2470.36
+Económico,Informalidad (porcentaje),2023,70.6
+Económico,Ingreso corriente promedio trimestral por hogar,2022,53234
+Económico,"Ingreso laboral Per capita (Deflactado con la canasta alimentaria, pesos)",2024,2470.36
 Gobierno,Ingresos brutos de los Gobiernos de los Estados (pesos),2016,46098966677
 Gobierno,Ingresos brutos de los Gobiernos de los Estados (pesos),2017,47928797634
 Gobierno,Ingresos brutos de los Gobiernos de los Estados (pesos),2018,50432874625
@@ -284,14 +284,14 @@ Gobierno,Ingresos brutos de los Gobiernos de los Estados (pesos),2019,5425809001
 Gobierno,Ingresos brutos de los Gobiernos de los Estados (pesos),2020,52783297268
 Gobierno,Ingresos brutos de los Gobiernos de los Estados (pesos),2021,51200175277
 Gobierno,Ingresos brutos de los Gobiernos de los Estados (pesos),2022,59814455057
-Economico,Ingresos por Remesas (millones de dólares),2024,345.32
-Economico,Inversión Extranjera Directa (IED) (millones de dólares),2023,285.4
-Economico,Lana Producción (toneladas),2022,1575.791
-Economico,Lana Valor de la Producción (miles de pesos,2022,4820.306
-Economico,Leche de Bovino Producción (toneladas),2022,422682.595
-Economico,Leche de Bovino Valor de la Producción (miles de pesos),2022,3094036.587
-Economico,Leche de Caprino Producción (toneladas),2022,62.02
-Economico,Leche de Caprino Valor de la Producción (miles de pesos),2022,498.601
+Económico,Ingresos por Remesas (millones de dólares),2024,345.32
+Económico,Inversión Extranjera Directa (IED) (millones de dólares),2023,285.4
+Económico,Lana Producción (toneladas),2022,1575.791
+Económico,Lana Valor de la Producción (miles de pesos,2022,4820.306
+Económico,Leche de Bovino Producción (toneladas),2022,422682.595
+Económico,Leche de Bovino Valor de la Producción (miles de pesos),2022,3094036.587
+Económico,Leche de Caprino Producción (toneladas),2022,62.02
+Económico,Leche de Caprino Valor de la Producción (miles de pesos),2022,498.601
 Seguridad,Lesiones,2015,3147
 Seguridad,Lesiones,2016,3647
 Seguridad,Lesiones,2017,5046
@@ -302,16 +302,16 @@ Seguridad,Lesiones,2021,5446
 Seguridad,Lesiones,2022,6207
 Seguridad,Lesiones,2023,6237
 Seguridad,Lesiones,2024,3069
-Economico,Llegada de Turistas a la Entidad por Tipo de Turismo (extranjeros),2021,27542
-Economico,Llegada de Turistas a la Entidad por Tipo de Turismo (nacionales),2021,1021185
-Economico,Llegada de Turistas Totales a la Entidad,2021,1048727
-Economico,Longitud de la Red Carretera Federal,2023,756
-Economico,Longitud de la Red de Alimentadoras estatales,2023,2800
-Economico,Longitud de la Red de Brechas Mejoradas,2023,2169
-Economico,Longitud de la Red de Caminos Rurales,2023,5290
-Economico,Longitud de la Red Nacional de carretera,2023,11015
-Economico,Miel Producción (toneladas),2022,1431.192
-Economico,Miel Valor de la Producción (miles de pesos),2022,64811.007
+Económico,Llegada de Turistas a la Entidad por Tipo de Turismo (extranjeros),2021,27542
+Económico,Llegada de Turistas a la Entidad por Tipo de Turismo (nacionales),2021,1021185
+Económico,Llegada de Turistas Totales a la Entidad,2021,1048727
+Económico,Longitud de la Red Carretera Federal,2023,756
+Económico,Longitud de la Red de Alimentadoras estatales,2023,2800
+Económico,Longitud de la Red de Brechas Mejoradas,2023,2169
+Económico,Longitud de la Red de Caminos Rurales,2023,5290
+Económico,Longitud de la Red Nacional de carretera,2023,11015
+Económico,Miel Producción (toneladas),2022,1431.192
+Económico,Miel Valor de la Producción (miles de pesos),2022,64811.007
 Social,Mortalidad Defunciones registradas,2010,18403
 Social,Mortalidad Defunciones registradas,2011,25106
 Social,Mortalidad Defunciones registradas,2012,22655
@@ -365,8 +365,8 @@ Seguridad,Número de accidentes de Transito,2019,2899
 Seguridad,Número de accidentes de Transito,2020,2282
 Seguridad,Número de accidentes de Transito,2021,2182
 Seguridad,Número de accidentes de Transito,2022,3275
-Economico,Ocupación en el Gobierno (Población ocupada en el gobierno como porcentaje de la población ocupada),2021,3.7
-Economico,Patentes,2024,10
+Económico,Ocupación en el Gobierno (Población ocupada en el gobierno como porcentaje de la población ocupada),2021,3.7
+Económico,Patentes,2024,10
 Seguridad,Percepción Sobre el Tema de la Inseguridad,2014,47.8
 Seguridad,Percepción Sobre el Tema de la Inseguridad,2015,50.5
 Seguridad,Percepción Sobre el Tema de la Inseguridad,2016,50.4
@@ -410,7 +410,7 @@ Social,Personal Médico,2019,5234
 Social,Personal Médico,2020,5341
 Social,Personal Médico,2021,5826
 Social,Personal Médico,2022,5905
-Economico,Personal ocupado en la Unidades Económicas,2019,691873
+Económico,Personal ocupado en la Unidades Económicas,2019,691873
 Medio Ambiente,Plantas Tratadoras de Aguas residuales,2013,54
 Medio Ambiente,Plantas Tratadoras de Aguas residuales,2014,65
 Medio Ambiente,Plantas Tratadoras de Aguas residuales,2015,78
@@ -435,10 +435,10 @@ Social,Población con Ingreso Inferior a la Línea de pobreza por ingresos,2016,
 Social,Población con Ingreso Inferior a la Línea de pobreza por ingresos,2018,49.9
 Social,Población con Ingreso Inferior a la Línea de pobreza por ingresos,2020,57.2
 Social,Población con Ingreso Inferior a la Línea de pobreza por ingresos,2022,46.1
-Economico,Población Desocupada,2024,31747
-Economico,Población Económicamente Activa,2024,1467760
-Economico,Población Ocupada,2024,1436013
-Economico,Pobreza laboral (Porcentaje),2023,40.3
+Económico,Población Desocupada,2024,31747
+Económico,Población Económicamente Activa,2024,1467760
+Económico,Población Ocupada,2024,1436013
+Económico,Pobreza laboral (Porcentaje),2023,40.3
 Social,Porcentaje de Abandono Escolar: Media Superior,2013,10.2
 Social,Porcentaje de Abandono Escolar: Media Superior,2014,12.6
 Social,Porcentaje de Abandono Escolar: Media Superior,2015,14.3
@@ -481,7 +481,7 @@ Seguridad,Porcentaje de delitos denunciados,2019,11.7
 Seguridad,Porcentaje de delitos denunciados,2020,13
 Seguridad,Porcentaje de delitos denunciados,2021,10.1
 Seguridad,Porcentaje de delitos denunciados,2022,19.3
-Economico,Porcentaje de la población con ingreso laboral inferior al costo de la canasta alimentaria (pobreza laboral),2024,40.3
+Económico,Porcentaje de la población con ingreso laboral inferior al costo de la canasta alimentaria (pobreza laboral),2024,40.3
 Social,Porcentaje de la Población en situación de Pobreza,2015,0.494
 Social,Porcentaje de la Población en situación de Pobreza,2016,0.569
 Social,Porcentaje de la Población en situación de Pobreza,2018,0.499
@@ -504,10 +504,10 @@ Social,Porcentaje de la población vulnerable por ingresos,2020,6.459086
 Social,Porcentaje de la población vulnerable por ingresos,2022,5.075462674
 Social,Porcentaje de Población Afiliada a servicios de salud,2015,82.36
 Social,Porcentaje de Población Afiliada a servicios de salud,2020,69.7
-Economico,Producción Bruta Total,2019,401036.694
-Economico,Producción Pesquera (Peso vivo toneladas),2022,455.643
-Economico,Producción Pesquera Valor de la Producción (Peso vivo miles de pesos),2022,42238.56043
-Economico,Productividad (pesos prod/hora trab),2023,87
+Económico,Producción Bruta Total,2019,401036.694
+Económico,Producción Pesquera (Peso vivo toneladas),2022,455.643
+Económico,Producción Pesquera Valor de la Producción (Peso vivo miles de pesos),2022,42238.56043
+Económico,Productividad (pesos prod/hora trab),2023,87
 Social,Rezago Educativo,2013,20.6
 Social,Rezago Educativo,2014,19.1
 Social,Rezago Educativo,2015,17.4
@@ -555,10 +555,10 @@ Seguridad,Secuestro,2021,28
 Seguridad,Secuestro,2022,15
 Seguridad,Secuestro,2023,15
 Seguridad,Secuestro,2024,8
-Economico,Superficie Cosechada (has),2022,469587.27
-Economico,Superficie Sembrada (has),2022,483605.23
-Economico,Tasa de Condiciones Críticas de Ocupación,2024,32.66
-Economico,Tasa de Desocupación,2024,2.163
+Económico,Superficie Cosechada (has),2022,469587.27
+Económico,Superficie Sembrada (has),2022,483605.23
+Económico,Tasa de Condiciones Críticas de Ocupación,2024,32.66
+Económico,Tasa de Desocupación,2024,2.163
 Seguridad,Tasa de homicidios,2011,8
 Seguridad,Tasa de homicidios,2012,6
 Seguridad,Tasa de homicidios,2013,6
@@ -581,7 +581,7 @@ Seguridad,Tasa de Incidencia Delictiva (100 mil hab),2019,25987.45121
 Seguridad,Tasa de Incidencia Delictiva (100 mil hab),2020,20732
 Seguridad,Tasa de Incidencia Delictiva (100 mil hab),2021,23605
 Seguridad,Tasa de Incidencia Delictiva (100 mil hab),2022,19649
-Economico,Tasa de Informalidad Laboral,2024,35.566
+Económico,Tasa de Informalidad Laboral,2024,35.566
 Social,Tasa de Mortalidad Infantil (Proyección),2013,13.9
 Social,Tasa de Mortalidad Infantil (Proyección),2014,13.4
 Social,Tasa de Mortalidad Infantil (Proyección),2015,13
@@ -593,14 +593,14 @@ Social,Tasa de Mortalidad Infantil (Proyección),2020,11.2
 Social,Tasa de Mortalidad Infantil (Proyección),2021,11
 Social,Tasa de Mortalidad Infantil (Proyección),2022,10.7
 Social,Tasa de Mortalidad Infantil (Proyección),2023,10.4
-Economico,Tasa de Ocupación en el Sector Informal,2024,70.904
+Económico,Tasa de Ocupación en el Sector Informal,2024,70.904
 Social,"Tasa de Ocupación no Permitida 
 porcentaje respecto a la población de 5 a 17 años)",2019,5.1
 Social,"Tasa de Ocupación no Permitida 
 porcentaje respecto a la población de 5 a 17 años)",2022,8.4
-Economico,Tasa de Ocupación Parcial y Desocupación,2024,9.972
-Economico,Tasa de Participación,2024,58.547
-Economico,Tasa de Presión General,2024,4.524
+Económico,Tasa de Ocupación Parcial y Desocupación,2024,9.972
+Económico,Tasa de Participación,2024,58.547
+Económico,Tasa de Presión General,2024,4.524
 Gobierno,Tasa de prevalencia de la corrupción,2017,13095
 Gobierno,Tasa de prevalencia de la corrupción,2019,9883
 Gobierno,Tasa de prevalencia de la corrupción,2021,9350
@@ -621,8 +621,8 @@ Social,"Tasa de Quehaceres Domésticos en Condiciones no Adecuadas
 (porcentaje respecto a la población de 5 a 17 años)",2019,4
 Social,"Tasa de Quehaceres Domésticos en Condiciones no Adecuadas
 (porcentaje respecto a la población de 5 a 17 años)",2022,7.8
-Economico,Tasa de Subocupación,2024,8.914
-Economico,Tasa de Trabajo Asalariado,2024,60.829
+Económico,Tasa de Subocupación,2024,8.914
+Económico,Tasa de Trabajo Asalariado,2024,60.829
 Social,"Tasa de Trabajo Infantil
 (porcentaje respecto a la población de 5 a 17 años)",2019,8.4
 Social,"Tasa de Trabajo Infantil
@@ -638,8 +638,8 @@ Social,Tasa Global de Fecundidad,2020,2.2
 Social,Tasa Global de Fecundidad,2021,2.19
 Social,Tasa Global de Fecundidad,2022,2.18
 Social,Tasa Global de Fecundidad,2023,2.17
-Economico,Trabajadores Asegurados Permanentes por el IMSS,2024,278383
-Economico,Unidades Económicas,2019,180358
+Económico,Trabajadores Asegurados Permanentes por el IMSS,2024,278383
+Económico,Unidades Económicas,2019,180358
 Social,Unidades Médicas,2015,925
 Social,Unidades Médicas,2016,926
 Social,Unidades Médicas,2017,927
@@ -648,7 +648,7 @@ Social,Unidades Médicas,2019,928
 Social,Unidades Médicas,2020,938
 Social,Unidades Médicas,2021,890
 Social,Unidades Médicas,2022,860
-Economico,Valor de la Producción (miles de pesos),2022,10136107.86
+Económico,Valor de la Producción (miles de pesos),2022,10136107.86
 Seguridad,Violación,2015,348
 Seguridad,Violación,2016,450
 Seguridad,Violación,2017,560
@@ -669,7 +669,7 @@ Seguridad,Violencia familiar,2021,5870
 Seguridad,Violencia familiar,2022,6929
 Seguridad,Violencia familiar,2023,7535
 Seguridad,Violencia familiar,2024,3807
-Economico,Volumen de la Producción (toneladas),2022,6922733.01
+Económico,Volumen de la Producción (toneladas),2022,6922733.01
 Medio Ambiente,Volumen tratado en las PTARs  (Millones m3),2017,582.2
 Medio Ambiente,Volumen tratado en las PTARs  (Millones m3),2018,51.9
 Medio Ambiente,Volumen tratado en las PTARs  (Millones m3),2019,950

@@ -66,7 +66,7 @@ function fetchData(data,valor){//Dado un conjunto de datos y una elección de te
 }
 document.getElementById("defaultOpen").click();//El histórico es la gráfica por default.
 B.onChange = function(newValue) {//Define una variable "global" que se usa en el script del mapa de méxico.
-    console.log("Ultimo estado seleccionado " + newValue);
+    //console.log("Ultimo estado seleccionado " + newValue);
     chart_nac.data.datasets[0].backgroundColor.fill('rgba(75, 192, 192, 0.2)')
     var sortedEstados=chart_nac.data.labels;
     chart_nac.data.datasets[0].backgroundColor[sortedEstados.indexOf("Hidalgo")] = 'rgba(75, 192, 192, 1)'
@@ -74,53 +74,10 @@ B.onChange = function(newValue) {//Define una variable "global" que se usa en el
     chart_nac.update();
 };
 document.addEventListener("DOMContentLoaded", function() {//Inicia el procesamiento una vez que está cargada la página.
-    let chart;
+    let chart,chart_nac;
     /*De aquí a----------------------------------------------------------------- */
     /*Tengo otra de prueba. Lo acomodaré a esa. */
-    fetch('Datos/Nacional.csv')//Lo primero que hace es descargar los datos
-    .then(response => response.text())//después, lo convierte a texto
-    .then(data=> {//después, hará lo siguiente:
-        var lines = data.split('\n');
-                nac=[]
-                console.log($(this).val())
-                lines.forEach((line, index) => {
-                    if (index === 0) 
-                        names=line.trim();
-                    nac.push(line.split(','));
-                });
-                var SortedEstados=nac[0].slice(5).map(x=>JSON.parse(x))//sus nombres originales
-                var datosEstados=nac[1].slice(5)//datos originales
-                
-                const combined_Estados = datosEstados.map((dato_est, index) => ({
-                            dato: SortedEstados[index], // Nombre estado
-                            value: dato_est // y su valor
-                        })).sort((a, b) => b.value-a.value);//orden segun su valor
-                console.log(combined_Estados)
-                SortedEstados = combined_Estados.map(item => item.dato.toString()); // Convertir a cadena
-                datosEstados = combined_Estados.map(item => item.value); // datos en orden
-                const ctx_nac = document.getElementById('nacional').getContext('2d');//inicio a crear la gráfica
-                chart_nac = new Chart(ctx_nac, {
-                    type: 'bar',
-                    data: {
-                        labels: SortedEstados,
-                        datasets: [{
-                            label: JSON.parse(nac[1]['0']),
-                            data: datosEstados,
-                            backgroundColor: nac[1].slice(3).fill('rgba(75, 192, 192, 0.2)'),
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: false,
-                            }
-                        },
-                    }
-                });
-                chart_nac.data.datasets[0].backgroundColor[SortedEstados.indexOf("Hidalgo")] = 'rgba(75, 192, 192, 1)'//Ilumino a Hidalgo
-    })
+    
     /*Acá, aún no tengo la base----------------------------------------------------------------- */
     $("#tema").change(function () {//De manera dinámica, cada vez que se cambia el valor de "tema", hace lo siguiente:
         $("#option option[value='default']").remove();
@@ -134,7 +91,78 @@ document.addEventListener("DOMContentLoaded", function() {//Inicia el procesamie
     
     $("#indicador").change(function () {//cuando cambia el valor del indicador:
         //aquí debe ir el fetch del nacional
-        console.log($(this).val())
+        fetch('Datos/Nacional.csv')//Lo primero que hace es descargar los datos
+    .then(response => response.text())//después, lo convierte a texto
+    .then(data=> {//después, hará lo siguiente:
+        var lines = data.split('\n');
+                nac=[]
+                //console.log($(this).val())
+                
+                let parsedData = lines.map(line => {
+                    
+                    if(line.split(",")[1].replace(/^"|"$/g, '')===$(this).val().normalize() || line.split(",")[0].replace(/^"|"$/g, '')=='Tema'){
+                        let values = [];
+                        let current = '';
+                        let inQuotes = false;
+                        
+                        for (let char of line) {
+                            if (char === '"') {
+                                inQuotes = !inQuotes; // Cambia el estado si estás dentro de comillas
+                            } else if (char === ',' && !inQuotes) {
+                                values.push(current.trim());
+                                current = '';
+                            } else {
+                                current += char;
+                            }
+                        }
+                        values.push(current.trim()); // Empuja el último valor
+                        nac.push(values)
+                    }
+                });
+                console.log(nac);
+                var SortedEstados=nac[0].slice(5).map(x=>x)//sus nombres originales
+                var datosEstados=nac[1].slice(5)//datos originales
+                ///Falta hacer algo con los NA. Después, podría 
+                const combined_Estados = datosEstados.map((dato_est, index) => ({
+                            dato: SortedEstados[index], // Nombre estado
+                            value: dato_est=='NA'? null:dato_est, // y su valor
+                        })).sort((a, b) => b.value-a.value);//orden segun su valor
+                console.log(combined_Estados)
+                SortedEstados = combined_Estados.map(item => item.dato.toString()); // Convertir a cadena
+                datosEstados = combined_Estados.map(item => item.value); // datos en orden
+                if(chart_nac){
+                    chart_nac.data.datasets[0].labels = SortedEstados;
+                    chart_nac.data.datasets[0].data = datosEstados;
+                    chart_nac.data.datasets[0].label=$(this).val();
+                    chart_nac.update();
+                }
+                else{
+                    const ctx_nac = document.getElementById('nacional').getContext('2d');//inicio a crear la gráfica
+                    chart_nac = new Chart(ctx_nac, {
+                        type: 'bar',
+                        data: {
+                            labels: SortedEstados,
+                            datasets: [{
+                                label: $(this).val(),
+                                data: datosEstados,
+                                backgroundColor: nac[1].slice(3).fill('rgba(75, 192, 192, 0.2)'),
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: false,
+                                }
+                            },
+                        }
+                    });
+                    chart_nac.data.datasets[0].backgroundColor[SortedEstados.indexOf("Hidalgo")] = 'rgba(75, 192, 192, 1)'//Ilumino a Hidalgo
+                }
+                
+    })
+        //console.log($(this).val())
         $("#indicador option[value='default']").remove();
         document.getElementById("descripcion_indicador").innerHTML = "Aquí pondría la descripción dle indicador: "+$(this).val();
         fetch('Datos/Hidalgo_historico.csv')//Aquí descarga los datos del historico y crea las gráficas
@@ -160,7 +188,7 @@ document.addEventListener("DOMContentLoaded", function() {//Inicia el procesamie
             //combined es un json, pero .year podria tener huecos.
 
             var x_original=combined.map(item => item.year).sort()
-            console.log(x_original)
+            //console.log(x_original)
             const lr=linearRegression(sortedDatos,x_original)
             const x_0=lr['intercept'];
             const p=lr['slope'];
@@ -185,7 +213,7 @@ document.addEventListener("DOMContentLoaded", function() {//Inicia el procesamie
                 return completeData;
               }
             const x_sin_huecos=completeYearRange(combined)
-            console.log(x_sin_huecos)
+            //console.log(x_sin_huecos)
             const sortedYears2 = x_sin_huecos.map(item => item.year.toString());
             const sortedDatos2 = x_sin_huecos.map(item => item.value);
             if (chart) {
