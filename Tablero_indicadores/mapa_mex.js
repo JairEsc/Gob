@@ -49,7 +49,7 @@ L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_toner_background/{z}/{x}/
 
 function style_ent(feature) {
     return {
-        fillColor: '#B65C51',
+        fillColor: getColor(feature.properties.CVEGEO),
         weight: 2,
         opacity: 1,
         color: 'white',
@@ -118,5 +118,27 @@ Object.defineProperty(B, 'myVariable', {
     }
 });
 
+window.addEventListener("dataUpdated", function(event) {
+    console.log(event)
+    /*let updatedData = event.detail.indexedEstados;
+    mexico.features.forEach((feature, index) => {
+        if (index < updatedData.length) {
+          feature.properties.CVEGEO = updatedData[index];
+        }
+      });
+    poligonos_map.resetStyle();*/
+    
+    /*let updatedData = event.detail.dataList;
 
+    let jsonData = {}; // Tu variable tipo JSON
 
+    // Modificar jsonData con los valores de updatedData
+    updatedData.forEach((value, index) => {
+        jsonData[index] = value; // Ejemplo de modificación
+    });
+
+    // Ejecutar el bloque de código necesario con jsonData
+    console.log("jsonData actualizado:", jsonData);
+    
+    // Aquí puedes incluir el código para actualizar el mapa de Leaflet*/
+});

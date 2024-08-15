@@ -126,6 +126,11 @@ document.addEventListener("DOMContentLoaded", function() {//Inicia el procesamie
                 SortedEstados = combined_Estados.map(item => item.dato.toString()); // Convertir a cadena
                 indexedEstados=OriginalEstados.map(item => SortedEstados.indexOf(item.toString()))//indices de los estados según su posición respecto al indicador
                 console.log(indexedEstados)
+                window.sharedData = indexedEstados;
+                const event = new CustomEvent("dataUpdated", {
+                    detail: { indexedEstados: window.sharedData }
+                });
+                window.dispatchEvent(event);
                 datosEstados = combined_Estados.map(item => item.value); // datos en orden
                 /*if(chart_nac){
                     chart_nac.data.datasets[0].labels = SortedEstados;
