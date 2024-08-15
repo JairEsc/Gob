@@ -1,4 +1,4 @@
-function openChart(evt, tagName) {
+function openChart(evt, tagName) {//funcion para activar una de las gráficas según la elección.
     // Declare all variables
     var i, tabcontent, tablinks;
     // Get all elements with class="tabcontent" and hide them
@@ -16,7 +16,7 @@ function openChart(evt, tagName) {
     evt.currentTarget.className += " active";
     window.dispatchEvent(new Event("resize"));
 }
-  function linearRegression(y,x){
+  function linearRegression(y,x){//Hace regresión lineal dados y,x
     var lr = {};
     var n = y.length;
     var sum_x = 0;
@@ -36,7 +36,7 @@ function openChart(evt, tagName) {
     lr['r2'] = Math.pow((n*sum_xy - sum_x*sum_y)/Math.sqrt((n*sum_xx-sum_x*sum_x)*(n*sum_yy-sum_y*sum_y)),2);
     return lr;
 }
-function fetchData(data,valor){
+function fetchData(data,valor){//Dado un conjunto de datos y una elección de tema, rellena las posibles opciones del indicador.
     const lines = data.split('\n');
     const select = document.getElementById('indicador');
     $("#indicador").empty();
@@ -50,7 +50,7 @@ function fetchData(data,valor){
     lines.forEach((line, index) => {
         if(line.split(',')[0].trim()==valor){
             flag=1
-            if (index === 0) return; // Skip the header
+            if (index === 0) return; 
         var indicadorValue=line.split(',')[1].trim();
         //Se va a seleccionar 
         
@@ -59,17 +59,13 @@ function fetchData(data,valor){
             option.value = indicadorValue;
             option.text = indicadorValue;
             select.appendChild(option);
-            // Add the value to the set
             uniqueIndicators.add(indicadorValue);
         }
         }
-        
     });
-
 }
-document.getElementById("defaultOpen").click();
-
-B.onChange = function(newValue) {
+document.getElementById("defaultOpen").click();//El histórico es la gráfica por default.
+B.onChange = function(newValue) {//Define una variable "global" que se usa en el script del mapa de méxico.
     console.log("Ultimo estado seleccionado " + newValue);
     chart_nac.data.datasets[0].backgroundColor.fill('rgba(75, 192, 192, 0.2)')
     var sortedEstados=chart_nac.data.labels;
@@ -77,28 +73,32 @@ B.onChange = function(newValue) {
     chart_nac.data.datasets[0].backgroundColor[sortedEstados.indexOf(newValue)]='rgba(75, 192, 192, 1)'
     chart_nac.update();
 };
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function() {//Inicia el procesamiento una vez que está cargada la página.
     let chart;
     /*De aquí a----------------------------------------------------------------- */
-    fetch('Datos/Nacional_prueba.csv')
-    .then(response => response.text())
-    .then(data=> {
+    /*Tengo otra de prueba. Lo acomodaré a esa. */
+    fetch('Datos/Nacional.csv')//Lo primero que hace es descargar los datos
+    .then(response => response.text())//después, lo convierte a texto
+    .then(data=> {//después, hará lo siguiente:
         var lines = data.split('\n');
                 nac=[]
+                console.log($(this).val())
                 lines.forEach((line, index) => {
                     if (index === 0) 
                         names=line.trim();
-                    nac.push(line.split(','))  
+                    nac.push(line.split(','));
                 });
-                var SortedEstados=nac[0].slice(3).map(x=>JSON.parse(x))//sus nombres originales
-                var datosEstados=nac[1].slice(3)//datos originales
+                var SortedEstados=nac[0].slice(5).map(x=>JSON.parse(x))//sus nombres originales
+                var datosEstados=nac[1].slice(5)//datos originales
+                
                 const combined_Estados = datosEstados.map((dato_est, index) => ({
                             dato: SortedEstados[index], // Nombre estado
                             value: dato_est // y su valor
                         })).sort((a, b) => b.value-a.value);//orden segun su valor
+                console.log(combined_Estados)
                 SortedEstados = combined_Estados.map(item => item.dato.toString()); // Convertir a cadena
                 datosEstados = combined_Estados.map(item => item.value); // datos en orden
-                const ctx_nac = document.getElementById('nacional').getContext('2d');
+                const ctx_nac = document.getElementById('nacional').getContext('2d');//inicio a crear la gráfica
                 chart_nac = new Chart(ctx_nac, {
                     type: 'bar',
                     data: {
@@ -119,25 +119,25 @@ document.addEventListener("DOMContentLoaded", function() {
                         },
                     }
                 });
-                chart_nac.data.datasets[0].backgroundColor[SortedEstados.indexOf("Hidalgo")] = 'rgba(75, 192, 192, 1)'//Va a cambiar
+                chart_nac.data.datasets[0].backgroundColor[SortedEstados.indexOf("Hidalgo")] = 'rgba(75, 192, 192, 1)'//Ilumino a Hidalgo
     })
-
     /*Acá, aún no tengo la base----------------------------------------------------------------- */
-    $("#tema").change(function () {
+    $("#tema").change(function () {//De manera dinámica, cada vez que se cambia el valor de "tema", hace lo siguiente:
         $("#option option[value='default']").remove();
-        fetch('Datos/Hidalgo_historico.csv')
+        fetch('Datos/Hidalgo_historico.csv')//otro fetch. i.e. descarga y luego...
         .then(response => response.text())
         .then(data => {
-            fetchData(data,$(this).val().toString())
+            fetchData(data,$(this).val().toString());
             })
         .catch(error => console.error('Error fetching the CSV file:', error));
     });
     
-    $("#indicador").change(function () {
+    $("#indicador").change(function () {//cuando cambia el valor del indicador:
+        //aquí debe ir el fetch del nacional
         console.log($(this).val())
         $("#indicador option[value='default']").remove();
         document.getElementById("descripcion_indicador").innerHTML = "Aquí pondría la descripción dle indicador: "+$(this).val();
-        fetch('Datos/Hidalgo_historico.csv')
+        fetch('Datos/Hidalgo_historico.csv')//Aquí descarga los datos del historico y crea las gráficas
         .then(response => response.text())
         .then(data => {
             const lines = data.split('\n');
@@ -220,6 +220,8 @@ document.addEventListener("DOMContentLoaded", function() {
                         },]
                     },
                     options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
                         plugins: {chartArea: {
                             backgroundColor: 'rgba(240, 240, 240, 1)' // Cambia este color a lo que desees
                         }},
