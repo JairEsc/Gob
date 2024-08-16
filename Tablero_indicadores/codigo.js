@@ -1,4 +1,3 @@
-//var activa="historico_chart"
 function openChart(evt, tagName) {
   //funcion para activar una de las gráficas según la elección.
   // Declare all variables
@@ -49,41 +48,94 @@ function fetchData(data, valor) {
   const select = document.getElementById("indicador");
   $("#indicador").empty();
   var uniqueIndicators = new Set();
-  var flag = 0;
   const option = document.createElement("option");
   option.value = "default";
   option.text = "Seleccione uno";
   select.appendChild(option);
   uniqueIndicators.add("Seleccione uno");
   lines.forEach((line, index) => {
-    if (line.split(",")[0].trim() == valor) {
-      flag = 1;
-      if (index === 0) return;
-      var indicadorValue = line.split(",")[1].trim();
-      //Se va a seleccionar
-
-      if (!uniqueIndicators.has(indicadorValue)) {
-        const option = document.createElement("option");
-        option.value = indicadorValue;
-        option.text = indicadorValue;
-        select.appendChild(option);
-        uniqueIndicators.add(indicadorValue);
-      }
+    var indicadorValue = line.split(",")[1].trim();
+    //Se va a seleccionar
+    if (!uniqueIndicators.has(indicadorValue)) {
+      const option = document.createElement("option");
+      option.value = indicadorValue;
+      option.text = indicadorValue;
+      select.appendChild(option);
+      uniqueIndicators.add(indicadorValue);
     }
   });
 }
-
 document.getElementById("defaultOpen").click(); //El histórico es la gráfica por default.
-
+let Medio_Ambiente = [];
+let Gobierno = [];
+let Social = [];
+let Economico = [];
+let Seguridad=[];
+let Genero=[];
 document.addEventListener("DOMContentLoaded", function () {
   //Inicia el procesamiento una vez que está cargada la página.
   /*De aquí a----------------------------------------------------------------- */
   /*Tengo otra de prueba. Lo acomodaré a esa. */
+  fetch("Datos/Hidalgo_historico.csv")
+  .then((response) => response.text())
+  .then((data) => {
+    // Dividir las líneas del archivo CSV
+    var lines = data.split("\n");
 
-  /*Acá, aún no tengo la base----------------------------------------------------------------- */
+    // Recorrer cada línea (ignorando la primera que contiene los encabezados)
+    lines.slice(1).forEach((line) => {
+      let values = line.split(",");
+      let tema = values[0].trim();
+      
+      // Asignar la línea a su correspondiente objeto según el "Tema"
+      switch (tema) {
+        case "Medio Ambiente":
+          Medio_Ambiente.push(values);
+          break;
+        case "Gobierno":
+          Gobierno.push(values);
+          break;
+        case "Social":
+          Social.push(values);
+          break;
+        case "Económico":
+          Economico.push(values);
+          break;
+        case "Seguridad":
+          Seguridad.push(values);
+          break;
+        case "Género":
+          Genero.push(values);
+          break;
+      }
+    });
+  });
   $("#tema").change(function () {
+    let base;
     //De manera dinámica, cada vez que se cambia el valor de "tema", hace lo siguiente:
     $("#option option[value='default']").remove();
+    //Elegimos el tema:
+    switch ($(this).val()) {
+      case "Medio Ambiente":
+        base = Medio_Ambiente;
+        break;
+      case "Gobierno":
+        base = Gobierno;
+        break;
+      case "Social":
+        base = Social;
+        break;
+      case "Económico":
+        base = Economico;
+        break;
+      case "Seguridad":
+        base = Seguridad; // Si no hay coincidencia, base será un array vacío
+      case "Género":
+        base = Genero;  
+    }
+    
+    // Ahora puedes usar el objeto base
+    console.log(base);
     fetch("Datos/Hidalgo_historico.csv") //otro fetch. i.e. descarga y luego...
       .then((response) => response.text())
       .then((data) => {
