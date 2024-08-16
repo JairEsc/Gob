@@ -49,7 +49,7 @@ L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_toner_background/{z}/{x}/
 
 function style_ent(feature) {
     return {
-        fillColor: '#B65C51',
+        fillColor: getColor(feature.properties.CVEGEO),
         weight: 2,
         opacity: 1,
         color: 'white',
@@ -79,6 +79,7 @@ function highlightFeature(e) {
 }
 
 function resetHighlight(e) {
+    B.myVariable ='Hidalgo';
     poligonos_map.resetStyle();
     info.update();
 }
@@ -106,7 +107,7 @@ info.update = function (props) {
 
 info.addTo(map);
 
-var B = {};
+var B = {};//Aquí se define una variable global
 
 Object.defineProperty(B, 'myVariable', {
     set: function(value) {
@@ -117,3 +118,15 @@ Object.defineProperty(B, 'myVariable', {
         return this._myVariable;
     }
 });
+
+function updateStyle() {
+    console.log(poligonos_map)
+    console.log("Mapa actualizado");
+    poligonos_map.setStyle(style_ent);
+    poligonos_map.resetStyle();
+
+}
+window.addEventListener('jsonDataUpdated', function(e) {
+    updateStyle();
+});
+  

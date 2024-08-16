@@ -127,7 +127,7 @@ table th, table td {
   .tabcontent {
     width: 100%;
     align-content:center;
-    height: 400px;
+    height: 500px;
     display: block;
     border-top: none;
   }
@@ -142,13 +142,13 @@ table th, table td {
   tabcontent_nac {
     width: 60%;
     align-content:end;
-    height: 400px;
+    height: 500px;
     display: block;
     border: 1px solid #ccc;
     border-top: none;
     float: right;
   }
-  #map { height: 400px; 
+  #map { height: 500px; 
     opacity: 0.5;
     width: 39%;
     margin-right: 0px;
