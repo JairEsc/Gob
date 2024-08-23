@@ -1,6 +1,5 @@
 function openChart(evt, tagName) {
   //funcion para activar una de las gráficas según la elección.
-  // Declare all variables
   var i, tabcontent, tablinks;
   // Get all elements with class="tabcontent" and hide them
   tabcontent = document.getElementsByClassName("tabcontent");
@@ -35,16 +34,11 @@ function linearRegression(y, x) {
   }
   lr["slope"] = (n * sum_xy - sum_x * sum_y) / (n * sum_xx - sum_x * sum_x);
   lr["intercept"] = (sum_y - lr.slope * sum_x) / n;
-  lr["r2"] = Math.pow(
-    (n * sum_xy - sum_x * sum_y) /
-      Math.sqrt((n * sum_xx - sum_x * sum_x) * (n * sum_yy - sum_y * sum_y)),
-    2
-  );
   return lr;
 }
 function fetchData(data, valor) {
   //Dado un conjunto de datos y una elección de tema, rellena las posibles opciones del indicador.
-  const lines = data.split("\n");
+  console.log(data)
   const select = document.getElementById("indicador");
   $("#indicador").empty();
   var uniqueIndicators = new Set();
@@ -53,8 +47,8 @@ function fetchData(data, valor) {
   option.text = "Seleccione uno";
   select.appendChild(option);
   uniqueIndicators.add("Seleccione uno");
-  lines.forEach((line, index) => {
-    var indicadorValue = line.split(",")[1].trim();
+  data.forEach((line, index) => {
+    var indicadorValue = line[1].trim();
     //Se va a seleccionar
     if (!uniqueIndicators.has(indicadorValue)) {
       const option = document.createElement("option");
@@ -66,16 +60,23 @@ function fetchData(data, valor) {
   });
 }
 document.getElementById("defaultOpen").click(); //El histórico es la gráfica por default.
+//Posibles Temas
 let Medio_Ambiente = [];
 let Gobierno = [];
 let Social = [];
 let Economico = [];
 let Seguridad=[];
 let Genero=[];
+let Medio_Ambiente_Nac = [];
+let Gobierno_Nac = [];
+let Social_Nac = [];
+let Economico_Nac = [];
+let Seguridad_Nac=[];
+let Genero_Nac=[];
+let base;
+let base_Nac;
 document.addEventListener("DOMContentLoaded", function () {
   //Inicia el procesamiento una vez que está cargada la página.
-  /*De aquí a----------------------------------------------------------------- */
-  /*Tengo otra de prueba. Lo acomodaré a esa. */
   fetch("Datos/Hidalgo_historico.csv")
   .then((response) => response.text())
   .then((data) => {
@@ -85,8 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Recorrer cada línea (ignorando la primera que contiene los encabezados)
     lines.slice(1).forEach((line) => {
       let values = line.split(",");
-      let tema = values[0].trim();
-      
+      let tema = values[0].trim().replace(/^"|"$/g, "").replace(/^'|'$/g, "") ;
       // Asignar la línea a su correspondiente objeto según el "Tema"
       switch (tema) {
         case "Medio Ambiente":
@@ -110,148 +110,189 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   });
-  $("#tema").change(function () {
-    let base;
+  fetch("Datos/Nacional.csv")
+  .then((response) => response.text())
+  .then((data) => {
+    var lines = data.split("\n");
+    //console.log(lines)
+    //console.log(lines[0].split(","))
+    Medio_Ambiente_Nac.push(lines[0].split(","))
+    Gobierno_Nac.push(lines[0].split(","))
+    Economico_Nac.push(lines[0].split(","))
+    Social_Nac.push(lines[0].split(","))
+    Seguridad_Nac.push(lines[0].split(","))
+    Genero_Nac.push(lines[0].split(","))
+    // Recorrer cada línea (ignorando la primera que contiene los encabezados)
+    lines.slice(1).forEach((line) => {
+    let tema = line.split(",")[0] ;
+    //console.log(tema)
+    let values = [];
+    let current = "";
+    let inQuotes = false;
+
+    for (let char of line) {
+        if (char === '"') {
+        inQuotes = !inQuotes; // Cambia el estado si estás dentro de comillas
+        } else if (char === "," && !inQuotes) {
+        values.push(current.trim());
+        current = "";
+        } else {
+        current += char;
+        }
+    }
+    values.push(current.trim()); // Empuja el último valor
+    console.log(tema)
+    console.log(values)
+    //console.log(values)
+      // Asignar la línea a su correspondiente objeto según el "Tema"
+      switch (tema.replace(/^"|"$/g, "")) {
+        case "Medio Ambiente":
+          Medio_Ambiente_Nac.push(values);
+          break;
+        case "Gobierno":
+          Gobierno_Nac.push(values);
+          break;
+        case "Social":
+          Social_Nac.push(values);
+          break;
+        case "Económico":
+          Economico_Nac.push(values);
+          break;
+        case "Seguridad":
+          Seguridad_Nac.push(values);
+          break;
+        case "Género":
+          Genero_Nac.push(values);
+          break;
+      }
+    });
+  })
+  console.log(Medio_Ambiente_Nac)
+});
+
+$("#tema").change(function () {
+    
     //De manera dinámica, cada vez que se cambia el valor de "tema", hace lo siguiente:
     $("#option option[value='default']").remove();
     //Elegimos el tema:
     switch ($(this).val()) {
       case "Medio Ambiente":
         base = Medio_Ambiente;
+        base_Nac = Medio_Ambiente_Nac;
         break;
       case "Gobierno":
         base = Gobierno;
+        base_Nac = Gobierno_Nac;
         break;
       case "Social":
         base = Social;
+        base_Nac = Social_Nac;
         break;
       case "Económico":
         base = Economico;
+        base_Nac = Economico_Nac;
         break;
       case "Seguridad":
-        base = Seguridad; // Si no hay coincidencia, base será un array vacío
+        base = Seguridad; 
+        base_Nac = Seguridad_Nac; 
+        break;
       case "Género":
         base = Genero;  
+        base_Nac = Genero_Nac;  
+        break;
     }
-    
+
     // Ahora puedes usar el objeto base
-    console.log(base);
-    fetch("Datos/Hidalgo_historico.csv") //otro fetch. i.e. descarga y luego...
-      .then((response) => response.text())
-      .then((data) => {
-        fetchData(data, $(this).val().toString());
-      })
-      .catch((error) => console.error("Error fetching the CSV file:", error));
-  });
-  $("#indicador").change(function () {
+    fetchData(base, $(this).val().toString());//En principio debe ser equivalente usar historica o nacional para rellenar las opciones
+});
+
+$("#indicador").change(function () {
     document.getElementById("defaultOpen").click()//simulamos que estamos en la historica para que se creen ambas
     //cuando cambia el valor del indicador:
     console.log("Indicador seleccionado: " + $(this).val());
+    console.log(base_Nac)
     function updateJsonData() {
       // Disparar un evento personalizado cuando se actualiza el JSON
       const event = new CustomEvent("jsonDataUpdated", {});
       window.dispatchEvent(event);
     }
-    fetch("Datos/Nacional.csv") //Lo primero que hace es descargar los datos
-      .then((response) => response.text()) //después, lo convierte a texto
-      .then((data) => {
-        //después, hará lo siguiente:
-        var lines = data.split("\n");
-        nac = [];
-        //console.log($(this).val())
 
-        lines.map((line) => {
-          if (
-            line.split(",")[1].replace(/^"|"$/g, "") ===
-              $(this).val().normalize() ||
-            line.split(",")[0].replace(/^"|"$/g, "") == "Tema"
-          ) {
-            let values = [];
-            let current = "";
-            let inQuotes = false;
+    //después, hará lo siguiente:
+    var lines = base_Nac;
+    nac = [];
+    //console.log($(this).val())
 
-            for (let char of line) {
-              if (char === '"') {
-                inQuotes = !inQuotes; // Cambia el estado si estás dentro de comillas
-              } else if (char === "," && !inQuotes) {
-                values.push(current.trim());
-                current = "";
-              } else {
-                current += char;
-              }
-            }
-            values.push(current.trim()); // Empuja el último valor
-            nac.push(values);
-          }
-        });
-        var OriginalEstados = nac[0].slice(4).map((x) => x); //sus nombres originales
-        var datosEstados = nac[1].slice(4); //datos originales
-
-        ///Falta hacer algo con los NA. Después, podría
-        const combined_Estados = datosEstados.map((dato_est, index) => ({
-          //ordenados por valor de indicador
-          dato: OriginalEstados[index], // Nombre estado
-          value: dato_est == "NA" ? null : dato_est, // y su valor
-        })); //orden segun su valor
-        console.log("Orden original:");
-        console.log(combined_Estados);
-        const combined_Estados_ordenados = [...combined_Estados];
-        combined_Estados_ordenados.sort((a, b) => b.value - a.value);
-        SortedEstados = combined_Estados_ordenados.map((item) =>
-          item.dato.toString()
-        ); // Convertir a cadena
-        indexedEstados = OriginalEstados.map(
-          (item) => SortedEstados.indexOf(item.toString()) + 1
-        ); //indices de los estados según su posición respecto al indicador
-
-        mexico.features.forEach((feature, index) => {
-          feature.properties.CVEGEO =
-            33 - indexedEstados[index].toString().padStart(2, "0"); //CVEGEO es su posición a novel nacional
-        });
-        datosEstados = combined_Estados_ordenados.map((item) => item.value);
-
-        // datos en orden
-        /*if(chart_nac){
-                    chart_nac.data.datasets[0].labels = SortedEstados;
-                    chart_nac.data.datasets[0].data = datosEstados;
-                    chart_nac.data.datasets[0].label=$(this).val();
-                    chart_nac.update();
-                }
-                else{*/
-        if (typeof chart_nac != "undefined") {
-          chart_nac.destroy();
+    lines.map((line) => {//filtro al indicador nacional
+        if (
+        line[1].replace(/^"|"$/g, "") ===
+            $(this).val().normalize().replace(/^"|"$/g, "") ||
+        line[0].replace(/^"|"$/g, "") === "Tema"
+        ) {
+        nac.push(line);
         }
-        const ctx_nac = document.getElementById("nacional").getContext("2d"); //inicio a crear la gráfica
-        chart_nac = new Chart(ctx_nac, {
-          type: "bar",
-          data: {
-            labels: SortedEstados,
-            datasets: [
-              {
-                label: $(this).val(),
-                data: datosEstados,
-                backgroundColor: nac[1]
-                  .slice(3)
-                  .fill("rgba(75, 192, 192, 0.2)"),
-                borderColor: "rgba(75, 192, 192, 1)",
-                borderWidth: 1,
-              },
-            ],
-          },
-          options: {
-            scales: {
-              y: {
-                beginAtZero: false,
-              },
+    });
+    //console.log(nac)
+    var OriginalEstados = nac[0].slice(4).map((x) => x.replace(/^"|"$/g, "")); //sus nombres originales
+    var datosEstados = nac[1].slice(4); //datos originales
+    console.log(OriginalEstados)
+    console.log(datosEstados)
+    ///Falta hacer algo con los NA. Después, podría
+    const combined_Estados = datosEstados.map((dato_est, index) => ({
+        //ordenados por valor de indicador
+        dato: OriginalEstados[index], // Nombre estado
+        value: dato_est == "NA" ? null : dato_est, // y su valor
+    })); //orden segun su valor
+    console.log("Orden original:");
+    console.log(combined_Estados);
+    const combined_Estados_ordenados = [...combined_Estados];
+    combined_Estados_ordenados.sort((a, b) => b.value - a.value);
+    SortedEstados = combined_Estados_ordenados.map((item) =>
+        item.dato.toString()
+    ); // Convertir a cadena
+    indexedEstados = OriginalEstados.map(
+        (item) => SortedEstados.indexOf(item.toString()) + 1
+    ); //indices de los estados según su posición respecto al indicador
+
+    mexico.features.forEach((feature, index) => {
+        feature.properties.CVEGEO =
+        33 - indexedEstados[index].toString().padStart(2, "0"); //CVEGEO es su posición a novel nacional
+    });
+    datosEstados = combined_Estados_ordenados.map((item) => item.value);
+
+    if (typeof chart_nac != "undefined") {
+        chart_nac.destroy();
+    }
+    const ctx_nac = document.getElementById("nacional").getContext("2d"); //inicio a crear la gráfica
+    chart_nac = new Chart(ctx_nac, {
+        type: "bar",
+        data: {
+        labels: SortedEstados,
+        datasets: [
+            {
+            label: $(this).val(),
+            data: datosEstados,
+            backgroundColor: nac[1]
+                .slice(3)
+                .fill("rgba(75, 192, 192, 0.2)"),
+            borderColor: "rgba(75, 192, 192, 1)",
+            borderWidth: 1,
             },
-          },
-        });
-        chart_nac.data.datasets[0].backgroundColor[
-          SortedEstados.indexOf("Hidalgo")
-        ] = "rgba(75, 192, 192, 1)"; //Ilumino a Hidalgo
-        /*}*/
-        updateJsonData();
-      });
+        ],
+        },
+        options: {
+        scales: {
+            y: {
+            beginAtZero: false,
+            },
+        },
+        },
+    });
+    chart_nac.data.datasets[0].backgroundColor[
+        SortedEstados.indexOf("Hidalgo")
+    ] = "rgba(75, 192, 192, 1)"; //Ilumino a Hidalgo
+    /*}*/
+    updateJsonData();
+      
     //console.log($(this).val())
     $("#indicador option[value='default']").remove();
     document.getElementById("descripcion_indicador").innerHTML =
@@ -368,8 +409,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 }]*/
         });
       })
-      .catch((error) => console.error("Error fetching the CSV file:", error));
-  });
 });
 B.onChange = function (newValue) {
   //Utiliza una variable "global" que se usa en el script del mapa de méxico.
