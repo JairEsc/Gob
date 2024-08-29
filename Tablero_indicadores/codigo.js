@@ -207,12 +207,11 @@ $("#indicador").change(function () {
     const event = new CustomEvent("jsonDataUpdated", {});
     window.dispatchEvent(event);
   }
-
+  
   //después, hará lo siguiente:
-  var lines = base_Nac;
   nac = [];
   //console.log($(this).val())
-  lines.map((line, index) => {
+  base_Nac.map((line, index) => {
     //filtro al indicador nacional
     //Todavía hay bugs cuando los nombres en historico y Nacional no coinciden. E.g.
     // Aves (produccion toneladas) != Aves Produccion (toneladas)
@@ -224,8 +223,10 @@ $("#indicador").change(function () {
       nac.push(line);
     } //Parece que esta parte funciona bien si las cadenas son iguales
   });
+  document.getElementById("descripcion_indicador").innerHTML =
+  nac[1][2];
   //console.log(nac)
-  var OriginalEstados = nac[0].slice(4).map((x) => x.replace(/^"|"|\r$/g, "")); //sus nombres originales
+  var OriginalEstados = nac[0].slice(4).map((x) => x.replace(/^"|"|\r$/g, "")); //sus nombres originales// Va a cambiar el slice con la definitiva, porque trae descripcion
   var datosEstados = nac[1].slice(4); //datos originales
   ///Falta hacer algo con los NA. Después, podría
   const combined_Estados = datosEstados.map((dato_est, index) => ({
@@ -282,19 +283,13 @@ $("#indicador").change(function () {
 
   //console.log($(this).val())
   $("#indicador option[value='default']").remove();
-  document.getElementById("descripcion_indicador").innerHTML =
-    "Aquí pondría la descripción dle indicador: " + $(this).val();
+  
     //Aquí falta actualizar: 
     //base ya existe, que es una lista de los indicadores de el tema elegido.
     //Hace falta filtrarla al indicador seleccionado
-    var lines = base;
-    console.log(lines)
     years = [];
       datos = [];
-      console.log("Lo que va a buscar:")
-      console.log( $(this).val().replace(/^"|"|'$/g, ""))
-      lines.forEach((line, index) => {
-        console.log(line[1].trim().replace(/^"|"|'$/g, ""))
+      base.forEach((line, index) => {
         if (line[1].trim().replace(/^"|"|'$/g, "") == $(this).val().replace(/^"|"|'$/g, "")) {
           years.push(line[2].trim().replace(/^"|"|'$/g, ""));
           datos.push(parseFloat(line[3].trim().replace(/^"|"|'$/g, "")));
@@ -306,7 +301,6 @@ $("#indicador").change(function () {
           value: datos[index],
         }))
         .sort((a, b) => a.year - b.year);
-      console.log(combined)
       const sortedYears = combined.map((item) => item.year.toString());
       const sortedDatos = combined.map((item) => item.value);
       //combined es un json, pero .year podria tener huecos.
