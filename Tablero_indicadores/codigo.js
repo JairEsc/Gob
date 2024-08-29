@@ -223,9 +223,15 @@ $("#indicador").change(function () {
       nac.push(line);
     } //Parece que esta parte funciona bien si las cadenas son iguales
   });
+  console.log(nac);
+  if(nac[1].slice(4).every(val => val === "NA")){
+    document.getElementById('tab_map').style.visibility = "hidden";
+  }
+  else{
+    document.getElementById('tab_map').style.visibility = "visible";
+  }
   document.getElementById("descripcion_indicador").innerHTML =
   nac[1][2];
-  //console.log(nac)
   var OriginalEstados = nac[0].slice(4).map((x) => x.replace(/^"|"|\r$/g, "")); //sus nombres originales// Va a cambiar el slice con la definitiva, porque trae descripcion
   var datosEstados = nac[1].slice(4); //datos originales
   ///Falta hacer algo con los NA. Después, podría
