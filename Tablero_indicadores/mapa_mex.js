@@ -38,7 +38,7 @@ function getColor(d) {
     d==29? "#19964f":
     d==30? "#118747":
     d==31? "#08773f":
-    d==32? "#006837":'#B65C51'
+    d==32? "#006837":'#bfbfbf'
 }
 L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_toner_background/{z}/{x}/{y}{r}.{ext}', {
 	minZoom: 4,

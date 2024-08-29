@@ -10,13 +10,13 @@ function openChart(evt, tagName) {
   tablinks = document.getElementsByClassName("tablinks");
   for (i = 0; i < tablinks.length; i++) {
     tablinks[i].className = tablinks[i].className.replace(" active", "");
-    tablinks[i].className+=" pulse-button"
+    tablinks[i].className += " pulse-button";
   }
   // Show the current tab, and add an "active" class to the button that opened the tab
   document.getElementById(tagName).style.display = "flex";
-  evt.currentTarget.className="tablinks "
+  evt.currentTarget.className = "tablinks ";
   evt.currentTarget.className += " active";
-  
+
   window.dispatchEvent(new Event("resize"));
 }
 function linearRegression(y, x) {
@@ -84,8 +84,6 @@ document.addEventListener("DOMContentLoaded", function () {
     .then((data) => {
       // Dividir las líneas del archivo CSV
       var lines = data.split("\n");
-
-      // Recorrer cada línea (ignorando la primera que contiene los encabezados)
       lines.slice(1).forEach((line) => {
         let values = line.split(",");
         let tema = values[0].trim().replace(/^"|"$/g, "").replace(/^'|'$/g, "");
@@ -202,7 +200,7 @@ $("#tema").change(function () {
 });
 
 $("#indicador").change(function () {
-  document.getElementById('section').style.visibility='visible'
+  document.getElementById("section").style.visibility = "visible";
   document.getElementById("defaultOpen").click(); //simulamos que estamos en la historica para que se creen ambas
   //cuando cambia el valor del indicador:
 
@@ -211,7 +209,7 @@ $("#indicador").change(function () {
     const event = new CustomEvent("jsonDataUpdated", {});
     window.dispatchEvent(event);
   }
-  
+
   //después, hará lo siguiente:
   nac = [];
   //console.log($(this).val())
@@ -221,21 +219,21 @@ $("#indicador").change(function () {
     // Aves (produccion toneladas) != Aves Produccion (toneladas)
     if (
       line[1].replace(/^"|"|'$/g, "").toString() ===
-        $(this).val().normalize().replace(/^"|"|'$/g, "") ||
-      line[0].replace(/^"|"|'$/g, "")=== "Tema"
+        $(this)
+          .val()
+          .normalize()
+          .replace(/^"|"|'$/g, "") ||
+      line[0].replace(/^"|"|'$/g, "") === "Tema"
     ) {
       nac.push(line);
     } //Parece que esta parte funciona bien si las cadenas son iguales
   });
-  console.log(nac);
-  if(nac[1].slice(4).every(val => val === "NA")){
-    document.getElementById('tab_map').style.visibility = "hidden";
+  if (nac[1].slice(4).every((val) => val === "NA")) {
+    document.getElementById("tab_map").style.visibility = "hidden";
+  } else {
+    document.getElementById("tab_map").style.visibility = "visible";
   }
-  else{
-    document.getElementById('tab_map').style.visibility = "visible";
-  }
-  document.getElementById("descripcion_indicador").innerHTML =
-  nac[1][2];
+  document.getElementById("descripcion_indicador").innerHTML = nac[1][2];
   var OriginalEstados = nac[0].slice(4).map((x) => x.replace(/^"|"|\r$/g, "")); //sus nombres originales// Va a cambiar el slice con la definitiva, porque trae descripcion
   var datosEstados = nac[1].slice(4); //datos originales
   ///Falta hacer algo con los NA. Después, podría
@@ -248,16 +246,21 @@ $("#indicador").change(function () {
   combined_Estados_ordenados.sort((a, b) => b.value - a.value);
   SortedEstados = combined_Estados_ordenados.map((item) =>
     item.dato.toString()
-  ); // Convertir a cadena
+  );
   indexedEstados = OriginalEstados.map(
     (item) => SortedEstados.indexOf(item.toString()) + 1
   ); //indices de los estados según su posición respecto al indicador
-
-  mexico.features.forEach((feature, index) => {//Actualiza el ranking de los estados
+  mexico.features.forEach((feature, index) => {
+    //Actualiza el ranking de los estados
     //Vamos a hacer un default para cuando no haya datos.
     feature.properties.CVEGEO =
-      33 - indexedEstados[index].toString().padStart(2, "0"); //CVEGEO es su posición a novel nacional
+      combined_Estados_ordenados[
+        SortedEstados.indexOf(feature.properties.NOMGEO)
+      ].value === null
+        ? "NA"
+        : 33 - indexedEstados[index].toString().padStart(2, "0"); //CVEGEO es su posición a novel nacional
   });
+
   datosEstados = combined_Estados_ordenados.map((item) => item.value);
 
   if (typeof chart_nac != "undefined") {
@@ -270,7 +273,12 @@ $("#indicador").change(function () {
       labels: SortedEstados,
       datasets: [
         {
-          label: $(this).val(),
+          label:
+            $(this)
+              .val()
+              .replace(/^"|"|\r|'$/g, "") +
+            " - " +
+            nac[1][3].replace(/^"|"|\r|'$/g, ""),
           data: datosEstados,
           backgroundColor: nac[1].slice(3).fill("rgba(75, 192, 192, 0.2)"),
           borderColor: "rgba(75, 192, 192, 1)",
@@ -293,113 +301,117 @@ $("#indicador").change(function () {
 
   //console.log($(this).val())
   $("#indicador option[value='default']").remove();
-  
-    //Aquí falta actualizar: 
-    //base ya existe, que es una lista de los indicadores de el tema elegido.
-    //Hace falta filtrarla al indicador seleccionado
-    years = [];
-      datos = [];
-      base.forEach((line, index) => {
-        if (line[1].trim().replace(/^"|"|'$/g, "") == $(this).val().replace(/^"|"|'$/g, "")) {
-          years.push(line[2].trim().replace(/^"|"|'$/g, ""));
-          datos.push(parseFloat(line[3].trim().replace(/^"|"|'$/g, "")));
-        }
-      });
-      if(years.length<=1){
-        document.getElementById("tab_map").click()
-        document.getElementById("defaultOpen").style.visibility = "hidden";
+
+  //Aquí falta actualizar:
+  //base ya existe, que es una lista de los indicadores de el tema elegido.
+  //Hace falta filtrarla al indicador seleccionado
+  years = [];
+  datos = [];
+  base.forEach((line, index) => {
+    if (
+      line[1].trim().replace(/^"|"|'$/g, "") ==
+      $(this)
+        .val()
+        .replace(/^"|"|'$/g, "")
+    ) {
+      years.push(line[2].trim().replace(/^"|"|'$/g, ""));
+      datos.push(parseFloat(line[3].trim().replace(/^"|"|'$/g, "")));
+    }
+  });
+  if (years.length <= 1) {
+    document.getElementById("tab_map").click();
+    document.getElementById("defaultOpen").style.visibility = "hidden";
+  } else {
+    document.getElementById("defaultOpen").click();
+    document.getElementById("defaultOpen").style.visibility = "visible";
+  }
+
+  const combined = years
+    .map((year, index) => ({
+      year: parseInt(JSON.parse(year), 10),
+      value: datos[index],
+    }))
+    .sort((a, b) => a.year - b.year);
+  const sortedYears = combined.map((item) => item.year.toString());
+  const sortedDatos = combined.map((item) => item.value);
+  //combined es un json, pero .year podria tener huecos.
+
+  var x_original = combined.map((item) => item.year).sort();
+  //console.log(x_original)
+  const lr = linearRegression(sortedDatos, x_original);
+  const x_0 = lr["intercept"];
+  const p = lr["slope"];
+  x_original.push(x_original[x_original.length - 1] + 1);
+  const x_completo = Array(
+    x_original[x_original.length - 1] - x_original[0] + 1
+  )
+    .fill()
+    .map((element, index) => index + x_original[0]);
+  function completeYearRange(data) {
+    const startYear = Math.min(...data.map((item) => item.year));
+    const endYear = Math.max(...data.map((item) => item.year));
+
+    const completeData = [];
+
+    for (let year = startYear; year <= endYear; year++) {
+      const foundItem = data.find((item) => item.year === year);
+
+      if (foundItem) {
+        completeData.push(foundItem);
+      } else {
+        completeData.push({ year: year, value: null });
       }
-      else{
-        document.getElementById("defaultOpen").click()
-        document.getElementById("defaultOpen").style.visibility = "visible";
-      }
+    }
 
-      const combined = years
-        .map((year, index) => ({
-          year: parseInt(JSON.parse(year), 10),
-          value: datos[index],
-        }))
-        .sort((a, b) => a.year - b.year);
-      const sortedYears = combined.map((item) => item.year.toString());
-      const sortedDatos = combined.map((item) => item.value);
-      //combined es un json, pero .year podria tener huecos.
-
-      var x_original = combined.map((item) => item.year).sort();
-      //console.log(x_original)
-      const lr = linearRegression(sortedDatos, x_original);
-      const x_0 = lr["intercept"];
-      const p = lr["slope"];
-      x_original.push(x_original[x_original.length - 1] + 1);
-      const x_completo = Array(
-        x_original[x_original.length - 1] - x_original[0] + 1
-      )
-        .fill()
-        .map((element, index) => index + x_original[0]);
-      function completeYearRange(data) {
-        const startYear = Math.min(...data.map((item) => item.year));
-        const endYear = Math.max(...data.map((item) => item.year));
-
-        const completeData = [];
-
-        for (let year = startYear; year <= endYear; year++) {
-          const foundItem = data.find((item) => item.year === year);
-
-          if (foundItem) {
-            completeData.push(foundItem);
-          } else {
-            completeData.push({ year: year, value: null });
-          }
-        }
-
-        return completeData;
-      }
-      const x_sin_huecos = completeYearRange(combined);
-      //console.log(x_sin_huecos)
-      const sortedYears2 = x_sin_huecos.map((item) => item.year.toString());
-      const sortedDatos2 = x_sin_huecos.map((item) => item.value);
-      if (typeof chart != "undefined") {
-        chart.destroy();
-      }
-      // Crear una nueva gráfica
-      const ctx = document.getElementById("historico").getContext("2d");
-      chart = new Chart(ctx, {
-        type: "line",
-        data: {
+    return completeData;
+  }
+  const x_sin_huecos = completeYearRange(combined);
+  //console.log(x_sin_huecos)
+  const sortedYears2 = x_sin_huecos.map((item) => item.year.toString());
+  const sortedDatos2 = x_sin_huecos.map((item) => item.value);
+  if (typeof chart != "undefined") {
+    chart.destroy();
+  }
+  // Crear una nueva gráfica
+  const ctx = document.getElementById("historico").getContext("2d");
+  chart = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: x_completo,
+      datasets: [
+        {
+          label: $(this).val(),
+          data: sortedDatos2,
+          backgroundColor: "rgba(75, 192, 192, 0.2)",
+          borderColor: "rgba(75, 192, 192, 1)",
+          borderWidth: 1,
+          labels: sortedYears2,
+          spanGaps: true,
+        },
+        {
+          label: "Regresión",
+          data: x_completo.map(function (y) {
+            return x_0 + y * p;
+          }),
           labels: x_completo,
-          datasets: [
-            {
-              label: $(this).val(),
-              data: sortedDatos2,
-              backgroundColor: "rgba(75, 192, 192, 0.2)",
-              borderColor: "rgba(75, 192, 192, 1)",
-              borderWidth: 1,
-              labels: sortedYears2,
-              spanGaps: true,
-            },
-            {
-              label: "Regresión",
-              data: x_completo.map(function (y) {
-                return x_0 + y * p;
-              }),
-              labels: x_completo,
-            },
-          ],
         },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            chartArea: {
-              backgroundColor: "rgba(240, 240, 240, 1)", // Cambia este color a lo que desees
-            },
-          },
-          scales: {
-            y: {
-              beginAtZero: false,
-            },
-          },
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        chartArea: {
+          backgroundColor: "rgba(240, 240, 240, 1)", // Cambia este color a lo que desees
         },
-        /*plugins: [{
+      },
+      scales: {
+        y: {
+          beginAtZero: false,
+        },
+      },
+    },
+    /*plugins: [{
                     id: 'custom_canvas_background_color',
                     beforeDraw: (chart) => {
                         const ctx = chart.canvas.getContext('2d');
@@ -410,8 +422,8 @@ $("#indicador").change(function () {
                         ctx.restore();
                     }
                 }]*/
-      });
-    })
+  });
+});
 B.onChange = function (newValue) {
   //Utiliza una variable "global" que se usa en el script del mapa de méxico.
   chart_nac.data.datasets[0].backgroundColor.fill("rgba(75, 192, 192, 0.2)");
@@ -421,4 +433,4 @@ B.onChange = function (newValue) {
   chart_nac.data.datasets[0].backgroundColor[sortedEstados.indexOf(newValue)] =
     "rgba(75, 192, 192, 1)";
   chart_nac.update();
-}
+};
