@@ -120,7 +120,6 @@ Object.defineProperty(B, 'myVariable', {
 });
 
 function updateStyle() {
-    console.log(poligonos_map)
     console.log("Mapa actualizado");
     poligonos_map.setStyle(style_ent);
     poligonos_map.resetStyle();
