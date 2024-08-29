@@ -234,6 +234,20 @@ $("#indicador").change(function () {
     document.getElementById("tab_map").style.visibility = "visible";
   }
   document.getElementById("descripcion_indicador").innerHTML = nac[1][2];
+
+
+
+
+
+
+  //document.getElementById("fuente").innerHTML += nac[1][3].slice(0,5)==='fuente'?nac[1][3].slice(7):nac[1][3];   // Cuando ya se tenga una base buena
+  //También temporalidad
+  
+  
+
+  
+  
+  
   var OriginalEstados = nac[0].slice(4).map((x) => x.replace(/^"|"|\r$/g, "")); //sus nombres originales// Va a cambiar el slice con la definitiva, porque trae descripcion
   var datosEstados = nac[1].slice(4); //datos originales
   ///Falta hacer algo con los NA. Después, podría
@@ -299,12 +313,7 @@ $("#indicador").change(function () {
   /*}*/
   updateJsonData();
 
-  //console.log($(this).val())
   $("#indicador option[value='default']").remove();
-
-  //Aquí falta actualizar:
-  //base ya existe, que es una lista de los indicadores de el tema elegido.
-  //Hace falta filtrarla al indicador seleccionado
   years = [];
   datos = [];
   base.forEach((line, index) => {
@@ -337,7 +346,6 @@ $("#indicador").change(function () {
   //combined es un json, pero .year podria tener huecos.
 
   var x_original = combined.map((item) => item.year).sort();
-  //console.log(x_original)
   const lr = linearRegression(sortedDatos, x_original);
   const x_0 = lr["intercept"];
   const p = lr["slope"];
@@ -366,7 +374,6 @@ $("#indicador").change(function () {
     return completeData;
   }
   const x_sin_huecos = completeYearRange(combined);
-  //console.log(x_sin_huecos)
   const sortedYears2 = x_sin_huecos.map((item) => item.year.toString());
   const sortedDatos2 = x_sin_huecos.map((item) => item.value);
   if (typeof chart != "undefined") {
