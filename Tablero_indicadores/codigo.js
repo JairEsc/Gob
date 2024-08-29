@@ -10,10 +10,13 @@ function openChart(evt, tagName) {
   tablinks = document.getElementsByClassName("tablinks");
   for (i = 0; i < tablinks.length; i++) {
     tablinks[i].className = tablinks[i].className.replace(" active", "");
+    tablinks[i].className+=" pulse-button"
   }
   // Show the current tab, and add an "active" class to the button that opened the tab
   document.getElementById(tagName).style.display = "flex";
+  evt.currentTarget.className="tablinks "
   evt.currentTarget.className += " active";
+  
   window.dispatchEvent(new Event("resize"));
 }
 function linearRegression(y, x) {
@@ -199,6 +202,7 @@ $("#tema").change(function () {
 });
 
 $("#indicador").change(function () {
+  document.getElementById('section').style.visibility='visible'
   document.getElementById("defaultOpen").click(); //simulamos que estamos en la historica para que se creen ambas
   //cuando cambia el valor del indicador:
 
@@ -301,6 +305,15 @@ $("#indicador").change(function () {
           datos.push(parseFloat(line[3].trim().replace(/^"|"|'$/g, "")));
         }
       });
+      if(years.length<=1){
+        document.getElementById("tab_map").click()
+        document.getElementById("defaultOpen").style.visibility = "hidden";
+      }
+      else{
+        document.getElementById("defaultOpen").click()
+        document.getElementById("defaultOpen").style.visibility = "visible";
+      }
+
       const combined = years
         .map((year, index) => ({
           year: parseInt(JSON.parse(year), 10),

@@ -181,3 +181,29 @@ table th, table td {
     margin-right: 0px;
     opacity: 0.7;
 }
+
+
+.pulse-button {
+    /* Button default styles, customize them to match your button */
+    display: inline-block;
+    background-color: #ccc;
+    border-radius: 1px;
+    cursor: pointer;
+    
+    /* Apply the pulse animation */
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  #section{
+    visibility: hidden;
+  }
