@@ -233,14 +233,14 @@ $("#indicador").change(function () {
   } else {
     document.getElementById("tab_map").style.visibility = "visible";
   }
+  
   document.getElementById("descripcion_indicador").innerHTML = nac[1][2];
+  document.getElementById("descripcion_indicador_title").style.visibility = "visible"
 
 
 
 
 
-
-  //document.getElementById("fuente").innerHTML += nac[1][3].slice(0,5)==='fuente'?nac[1][3].slice(7):nac[1][3];   // Cuando ya se tenga una base buena
   //También temporalidad
   
   
@@ -249,7 +249,7 @@ $("#indicador").change(function () {
   
   
   var OriginalEstados = nac[0].slice(4).map((x) => x.replace(/^"|"|\r$/g, "")); //sus nombres originales// Va a cambiar el slice con la definitiva, porque trae descripcion
-  var datosEstados = nac[1].slice(4); //datos originales
+  var datosEstados = nac[1].slice(4).map((x)=> parseFloat(x.replace(/^"|"|\r|,$/g, ""))); //datos originales
   ///Falta hacer algo con los NA. Después, podría
   const combined_Estados = datosEstados.map((dato_est, index) => ({
     //ordenados por valor de indicador
@@ -323,6 +323,13 @@ $("#indicador").change(function () {
         .val()
         .replace(/^"|"|'$/g, "")
     ) {
+      console.log(line[4].length)
+      if(line[4].length>1){
+        document.getElementById("fuente").innerHTML = 
+        line[4].trim().replace(/^"|"|'$/g, "").slice(0,6)==='Fuente'?
+        line[4].trim().replace(/^"|"|'$/g, ""):
+        'Fuente: '+line[4].trim().replace(/^"|"|'$/g, "")
+      }
       years.push(line[2].trim().replace(/^"|"|'$/g, ""));
       datos.push(parseFloat(line[3].trim().replace(/^"|"|'$/g, "")));
     }

@@ -168,7 +168,7 @@ table th, table td {
 }
 .info h4 {
     margin: 0 0 5px;
-    color: #bc0000;
+    color: #000000;
 }
 .legend {
     line-height: 18px;
@@ -205,5 +205,8 @@ table th, table td {
     }
   }
   #section{
+    visibility: hidden;
+  }
+  #descripcion_indicador_title{
     visibility: hidden;
   }
