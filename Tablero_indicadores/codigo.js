@@ -49,7 +49,7 @@ function fetchData(data, valor) {
   option.text = "Seleccione uno";
   select.appendChild(option);
   uniqueIndicators.add("Seleccione uno");
-  data.forEach((line, index) => {
+  data.slice(1).forEach((line, index) => {
     var indicadorValue = line[1].trim();
     //Se va a seleccionar
     if (!uniqueIndicators.has(indicadorValue)) {
@@ -196,7 +196,7 @@ $("#tema").change(function () {
   }
 
   // Ahora puedes usar el objeto base
-  fetchData(base, $(this).val().toString()); //En principio debe ser equivalente usar historica o nacional para rellenar las opciones
+  fetchData(base_Nac, $(this).val().toString()); //En principio debe ser equivalente usar historica o nacional para rellenar las opciones
 });
 
 $("#indicador").change(function () {
@@ -230,8 +230,10 @@ $("#indicador").change(function () {
   });
   if (nac[1].slice(4).every((val) => val === "NA")) {
     document.getElementById("tab_map").style.visibility = "hidden";
+    document.getElementById("info_hoverable").style.visibility = "hidden";
   } else {
     document.getElementById("tab_map").style.visibility = "visible";
+    document.getElementById("info_hoverable").style.visibility = "visible";
   }
   
   document.getElementById("descripcion_indicador").innerHTML = nac[1][2];
@@ -341,8 +343,11 @@ $("#indicador").change(function () {
     document.getElementById("defaultOpen").click();
     document.getElementById("defaultOpen").style.visibility = "visible";
   }
-
-  const combined = years
+  if(years.length<1){
+    console.log("No hay datos")
+  }
+  else{
+    const combined = years
     .map((year, index) => ({
       year: parseInt(JSON.parse(year), 10),
       value: datos[index],
@@ -437,6 +442,8 @@ $("#indicador").change(function () {
                     }
                 }]*/
   });
+  }
+  
 });
 B.onChange = function (newValue) {
   //Utiliza una variable "global" que se usa en el script del mapa de méxico.

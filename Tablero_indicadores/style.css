@@ -222,8 +222,9 @@ table th, table td {
   position: relative;
   display: inline-block;
   border-bottom: 1px dotted black;
-  float: right;
+  float: left;
   margin-top: 12px;
+  margin-left: 12px;
   margin-bottom: 12px;
 }
 
@@ -237,7 +238,7 @@ table th, table td {
   
   position: absolute;
   z-index: 1;
-  margin-left: -620px;
+  margin-left: 20px;
   float: right;
   /* Fade in tooltip - takes 1 second to go from 0% to 100% opac: */
   opacity: 0;
