@@ -222,10 +222,9 @@ table th, table td {
   position: relative;
   display: inline-block;
   border-bottom: 1px dotted black;
-  float: left;
-  margin-top: 12px;
+  margin-top: 9px;
   margin-left: 12px;
-  margin-bottom: 12px;
+  margin-bottom: 9px;
 }
 
 .tooltip .tooltiptext {
@@ -243,10 +242,13 @@ table th, table td {
   /* Fade in tooltip - takes 1 second to go from 0% to 100% opac: */
   opacity: 0;
   transition: opacity 1s;
-  margin-top: -12px;
+  margin-top: -9px;
 }
 
 .tooltip:hover .tooltiptext {
   visibility: visible;
   opacity: 1;
 }
+.bg {display:block;background-color:#EDE6ED;height:auto;text-align:center;padding-top:0px;}
+
+.infoHover {float: left;;padding:0px 0px 0px 0px;color:#3143e8;font-size:20px;border-radius:50%;border:solid 1px #3617e2;width:20px;height:20px;font-weight:bold;text-align:center;}

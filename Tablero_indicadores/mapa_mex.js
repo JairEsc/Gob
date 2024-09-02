@@ -129,3 +129,18 @@ window.addEventListener('jsonDataUpdated', function(e) {
     updateStyle();
 });
   
+function resaltarPoligonoPorCVE(cve) {
+    poligonos_map.eachLayer(function(layer) {
+        if (layer.feature && layer.feature.properties.CVEGEO === cve) {
+            layer.setStyle({
+                weight: 5,
+                color: '#666',
+                fillOpacity: 0.7
+            });
+            layer.bringToFront();
+            info.update(layer.feature.properties);
+        } else {
+            poligonos_map.resetStyle(layer);
+        }
+    });
+}

@@ -303,6 +303,11 @@ $("#indicador").change(function () {
       ],
     },
     options: {
+      onHover: function(event, elements) {
+        if (elements.length) {
+          resaltarPoligonoPorCVE(32-elements[0].index); // Muestra el objeto de la barra en la consola
+        }
+    },
       scales: {
         y: {
           beginAtZero: false,
