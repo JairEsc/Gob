@@ -4,7 +4,7 @@ var bounds = L.latLngBounds(
   );
 var map = L.map('map',{
     maxBounds: bounds,        // Establecer los límites máximos
-    maxBoundsViscosity: 1.0
+    maxBoundsViscosity: 0.8
 }).fitBounds(bounds);
 function getColor(d) {
     return d==1? "#a50026":
@@ -40,12 +40,13 @@ function getColor(d) {
     d==31? "#08773f":
     d==32? "#006837":'#bfbfbf'
 }
-L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_toner_background/{z}/{x}/{y}{r}.{ext}', {
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	minZoom: 4,
 	maxZoom: 15,
-	attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://www.stamen.com/" target="_blank">Stamen Design</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 	ext: 'png'
 }).addTo(map);
+
 
 function style_ent(feature) {
     return {
@@ -101,7 +102,7 @@ info.onAdd = function (map) {
 info.update = function (props) {
     this._div.innerHTML = 
     '<h4>' +  (props ?
-        props.NOMGEO ? props.NOMGEO+"<br />"
+        props.NOMGEO ? props.NOMGEO+'</h4>'+"<p style='font:8px;float:right'>"+"Dato: "+Math.round(props.Valor*100)/100+"</p>"
         : props.NOMGEO+'</h4>': ' ');
 };
 
@@ -144,3 +145,15 @@ function resaltarPoligonoPorCVE(cve) {
         }
     });
 }
+var controlSearch = new L.Control.Search({
+    position:'bottomleft',		
+    layer: poligonos_map,
+    initial: false,
+    zoom: 7,
+    marker: false,
+    propertyName: 'NOMGEO',
+    autoType: false, // Desactiva el autocompletado automático
+
+});
+
+map.addControl( controlSearch );

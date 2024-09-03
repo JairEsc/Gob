@@ -164,8 +164,8 @@ table th, table td {
 }
 
 .info {
-  padding: 6px 8px;
-  font: 18px/20px Arial, Helvetica, sans-serif;
+  padding: 2px 3px;
+  font: 16px/18px Arial, Helvetica, sans-serif;
   background: rgba(255,255,255,0.8);
   box-shadow: 0 0 15px rgba(0,0,0,0.2);
   border-radius: 5px;
@@ -176,6 +176,12 @@ table th, table td {
 .info h4 {
   margin: 0 0 5px;
   color: #000;
+}
+.info p{
+  float: right;
+  font: 10px;
+  margin-top: 3px;
+  margin-bottom: 3px;
 }
 
 .legend {
@@ -251,4 +257,4 @@ table th, table td {
 }
 .bg {display:block;background-color:#EDE6ED;height:auto;text-align:center;padding-top:0px;}
 
-.infoHover {float: left;;padding:0px 0px 0px 0px;color:#3143e8;font-size:20px;border-radius:50%;border:solid 1px #3617e2;width:20px;height:20px;font-weight:bold;text-align:center;}
+.infoHover {float: left;;padding:0px 0px 0px 0px;color:#225d41;font-size:20px;border-radius:50%;border:solid 1px #225d41;width:20px;height:20px;font-weight:bold;text-align:center;}

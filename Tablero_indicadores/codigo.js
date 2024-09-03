@@ -269,6 +269,7 @@ $("#indicador").change(function () {
   mexico.features.forEach((feature, index) => {
     //Actualiza el ranking de los estados
     //Vamos a hacer un default para cuando no haya datos.
+    feature.properties.Valor =datosEstados[index]
     feature.properties.CVEGEO =
       combined_Estados_ordenados[
         SortedEstados.indexOf(feature.properties.NOMGEO)
@@ -310,7 +311,7 @@ $("#indicador").change(function () {
     },
       scales: {
         y: {
-          beginAtZero: false,
+          beginAtZero: true,
         },
       },
     },
@@ -348,7 +349,7 @@ $("#indicador").change(function () {
     document.getElementById("defaultOpen").click();
     document.getElementById("defaultOpen").style.visibility = "visible";
   }
-  if(years.length<1){
+  if(years.length<=1){
     console.log("No hay datos")
   }
   else{
