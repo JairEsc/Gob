@@ -152,8 +152,6 @@ var controlSearch = new L.Control.Search({
     zoom: 7,
     marker: false,
     propertyName: 'NOMGEO',
-    autoType: false, // Desactiva el autocompletado automático
-
 });
 
 map.addControl( controlSearch );
