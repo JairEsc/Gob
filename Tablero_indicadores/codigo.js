@@ -2,7 +2,7 @@ function openChart(evt, tagName) {
   //funcion para activar una de las gráficas según la elección.
   var i, tabcontent, tablinks;
   // Get all elements with class="tabcontent" and hide them
-  tabcontent = document.getElementsByClassName("tabcontent");
+  tabcontent = document.getElementsByClassName("tabcontent_tablero_indicadores");
   for (i = 0; i < tabcontent.length; i++) {
     tabcontent[i].style.display = "none";
   }
@@ -10,7 +10,7 @@ function openChart(evt, tagName) {
   tablinks = document.getElementsByClassName("tablinks");
   for (i = 0; i < tablinks.length; i++) {
     tablinks[i].className = tablinks[i].className.replace(" active", "");
-    tablinks[i].className += " pulse-button";
+    tablinks[i].className += " pulse-button_tablero_indicadores";
   }
   // Show the current tab, and add an "active" class to the button that opened the tab
   document.getElementById(tagName).style.display = "flex";
@@ -41,8 +41,8 @@ function linearRegression(y, x) {
 }
 function fetchData(data, valor) {
   //Dado un conjunto de datos y una elección de tema, rellena las posibles opciones del indicador.
-  const select = document.getElementById("indicador");
-  $("#indicador").empty();
+  const select = document.getElementById("indicador_tablero_indicadores");
+  $("#indicador_tablero_indicadores").empty();
   var uniqueIndicators = new Set();
   const option = document.createElement("option");
   option.value = "default";
@@ -164,7 +164,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-$("#tema").change(function () {
+$("#tema_tablero_indicadores").change(function () {
   //De manera dinámica, cada vez que se cambia el valor de "tema", hace lo siguiente:
   $("#option option[value='default']").remove();
   //Elegimos el tema:
@@ -200,12 +200,12 @@ $("#tema").change(function () {
 });
 let bienvenida_tab=true
 
-$("#indicador").change(function () {
+$("#indicador_tablero_indicadores").change(function () {
   if(bienvenida_tab){
-    document.getElementsByClassName("bienvenida_tab_tablero_indicadores")[0].className="tabcontent_hist"
+    document.getElementsByClassName("bienvenida_tab_tablero_indicadores")[0].className="tabcontent_hist_tablero_indicadores"
     bienvenida_tab=false
   }
-  document.getElementById("section").style.visibility = "visible";
+  document.getElementById("section_tablero_indicadores").style.visibility = "visible";
   document.getElementById("defaultOpen").click(); //simulamos que estamos en la historica para que se creen ambas
   //cuando cambia el valor del indicador:
 
@@ -242,7 +242,7 @@ $("#indicador").change(function () {
   }
   
   document.getElementById("descripcion_indicador").innerHTML = nac[1][2];
-  document.getElementById("descripcion_indicador_title").style.visibility = "visible"
+  document.getElementById("descripcion_indicador_title_tablero_indicadores").style.visibility = "visible"
 
 
 

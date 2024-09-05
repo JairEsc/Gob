@@ -2,7 +2,7 @@ var bounds = L.latLngBounds(
     L.latLng(32.71865357039013, -86.71040527988355), // Coordenada suroeste
     L.latLng(14.532098369766466, -118.3651143522829)  // Coordenada noreste
   );
-var map = L.map('map',{
+var map = L.map('map_tablero_indicadores',{
     maxBounds: bounds,        // Establecer los límites máximos
     maxBoundsViscosity: 0.8
 }).fitBounds(bounds);
@@ -93,7 +93,7 @@ function onEachFeature(feature, layer) {
 var info = L.control();
 
 info.onAdd = function (map) {
-    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+    this._div = L.DomUtil.create('div', 'info_tablero_indicadores'); // create a div with a class "info"
     this.update();
     return this._div;
 };
