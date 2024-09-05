@@ -198,8 +198,13 @@ $("#tema").change(function () {
   // Ahora puedes usar el objeto base
   fetchData(base_Nac, $(this).val().toString()); //En principio debe ser equivalente usar historica o nacional para rellenar las opciones
 });
+let bienvenida_tab=true
 
 $("#indicador").change(function () {
+  if(bienvenida_tab){
+    document.getElementsByClassName("bienvenida_tab_tablero_indicadores")[0].className="tabcontent_hist"
+    bienvenida_tab=false
+  }
   document.getElementById("section").style.visibility = "visible";
   document.getElementById("defaultOpen").click(); //simulamos que estamos en la historica para que se creen ambas
   //cuando cambia el valor del indicador:
