@@ -1,0 +1,1 @@
+En ocasiones ocurre que al crear un mapa web, no puedo cargar una imagen de manera local, porque R "escribe" el html y utiliza la ruta local. Al publicarse, la ruta local no tiene sentido fuera de R. Por eso la cargo de manera remota
