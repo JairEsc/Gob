@@ -14,10 +14,10 @@ Aquí iría una explicación de los tipos de gases o lo que podríamos encontrar
 <div align='center'>
   <table width="100%" align>
     <tr>
-      <th>Proyecto</th>
-      <th>Vista previa</th>
-      <th>Descripción</th>
-      <th>Enlace</th>
+      <th width:"10%">Proyecto</th>
+      <th width:"40%">Vista previa</th>
+      <th width:"40%">Descripción</th>
+      <th width:"10%">Enlace</th>
     </tr>
     <tr>
       <td><b>Proyecto 1</b></td>
