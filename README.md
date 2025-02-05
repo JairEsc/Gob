@@ -12,12 +12,12 @@ Aquí iría una explicación de los tipos de gases o lo que podríamos encontrar
 | **Proyecto 1** | <img src="Otros_archivos/imagenes/Captura_1.JPG" width="300"> | Descripción A|[🔗 Ver más](https://ejemplo.com/proyecto1) |
 | **Proyecto 2** | <img src="Otros_archivos/imagenes/Captura_2.JPG" width="300"> | Descripción A|[🔗 Ver más](https://ejemplo.com/proyecto2) |
 <div align='center'>
-  <table width="100%" align>
+  <table width="100%">
     <tr>
-      <th width:"10%">Proyecto</th>
-      <th width:"40%">Vista previa</th>
-      <th width:"40%">Descripción</th>
-      <th width:"10%">Enlace</th>
+      <th width="10%">Proyecto</th>
+      <th width="40%">Vista previa</th>
+      <th width="40%">Descripción</th>
+      <th width="10%">Enlace</th>
     </tr>
     <tr>
       <td><b>Proyecto 1</b></td>
