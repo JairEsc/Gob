@@ -11,21 +11,22 @@ Aquí iría una explicación de los tipos de gases o lo que podríamos encontrar
 |--------------|---------------------------------------------|--------------------|--------|
 | **Proyecto 1** | <img src="Otros_archivos/imagenes/Captura_1.JPG" width="300"> | Descripción A|[🔗 Ver más](https://ejemplo.com/proyecto1) |
 | **Proyecto 2** | <img src="Otros_archivos/imagenes/Captura_2.JPG" width="300"> | Descripción A|[🔗 Ver más](https://ejemplo.com/proyecto2) |
-
-<table width="100%">
-  <tr>
-    <th>Proyecto</th>
-    <th>Vista previa</th>
-    <th>Enlace</th>
-  </tr>
-  <tr>
-    <td><b>Proyecto 1</b></td>
-    <td><img src="Otros_archivos/imagenes/Captura_1.JPG" width="300"></td>
-    <td><a href="https://ejemplo.com/proyecto1">🔗 Ver más</a></td>
-  </tr>
-  <tr>
-    <td><b>Proyecto 2</b></td>
-    <td><img src="Otros_archivos/imagenes/Captura_2.JPG" width="300"></td>
-    <td><a href="https://ejemplo.com/proyecto2">🔗 Ver más</a></td>
-  </tr>
-</table>
+<div align='center'>
+  <table width="100%" align>
+    <tr>
+      <th>Proyecto</th>
+      <th>Vista previa</th>
+      <th>Enlace</th>
+    </tr>
+    <tr>
+      <td><b>Proyecto 1</b></td>
+      <td><img src="Otros_archivos/imagenes/Captura_1.JPG" width="300"></td>
+      <td><a href="https://ejemplo.com/proyecto1">🔗 Ver más</a></td>
+    </tr>
+    <tr>
+      <td><b>Proyecto 2</b></td>
+      <td><img src="Otros_archivos/imagenes/Captura_2.JPG" width="300"></td>
+      <td><a href="https://ejemplo.com/proyecto2">🔗 Ver más</a></td>
+    </tr>
+  </table>
+</div>
